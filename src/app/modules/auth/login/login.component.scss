@@ -1,0 +1,24 @@
+.loginContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.loginForm{
+    max-width: 25rem;
+    width: 25rem;
+    min-width: 20rem;
+}
+
+.loginCard{
+    padding: 2rem;
+}
+
+.loginInput{
+    display: block;
+    padding-top: 1rem;
+}
+
+.loginBtns{
+    text-align: end;
+    margin: auto;
+}

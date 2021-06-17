@@ -1,0 +1,35 @@
+<div class="loginContainer">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="loginForm" id="loginForm">
+    <mat-card class="loginCard">
+      <mat-card-title>Login</mat-card-title>
+      <mat-card-content>
+        <mat-form-field appearance="fill" class="loginInput">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="example@example.com" formControlName="email" required>
+          <mat-error *ngIf="loginForm.controls.email.dirty && loginForm.controls.email.invalid">
+            <span *ngIf="loginForm.controls.email.errors?.required">Field is mandatory</span>
+            <span *ngIf="loginForm.controls.email.errors?.email">Data entered are invalid</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="loginInput">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="loginForm.controls.password.dirty && loginForm.controls.password.invalid">
+              <span *ngIf="loginForm.controls.password.errors?.required">Field is mandatory</span>
+              <span *ngIf="loginForm.controls.password.errors?.minlength">Input lenght is invalid</span>
+            </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions class="loginBtns">
+        <button type="submit" [disabled]="!loginForm.valid" mat-raised-button color="primary" class="loginBtn"
+                [attr.aria-label]="'Submit'" [attr.aria-pressed]="hide">
+          Submit
+        </button>
+      </mat-card-actions>
+     </mat-card>
+  </form>
+</div>
+
