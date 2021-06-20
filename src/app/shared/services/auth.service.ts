@@ -13,15 +13,21 @@ import { select, Store } from '@ngrx/store';
 export class AuthService {
 
   authData!: AuthData;
-  accessTokenString!: string;
-  baseUrl: string = 'https://localhost:44383/api/Account/login';
+  baseUrl: string = "https://localhost:44383/api/Account/login";
+  refreshUrl: string = "https://localhost:44383/api/Account/refresh-token/";
 
-  constructor(private http: HttpClient, private jwtHelperService: JwtHelperService, private store: Store) { 
-    this.store.pipe(select(getAccessToken)).subscribe(accessToken => this.accessTokenString = accessToken);
-  }
+  constructor(private http: HttpClient, private jwtHelperService: JwtHelperService) {}
 
   login(email: string, password: string) {
     return this.http.post<AuthData>(this.baseUrl, { email, password }).pipe(map(data => { 
+      this.authData = data;
+      this.authData.exp = Number(this.jwtHelperService.getTokenExpirationDate(data.token));
+      return this.authData;
+    }));
+  }
+
+  refresh(id: string) {
+    return this.http.get<AuthData>(this.refreshUrl + id).pipe(map(data => { 
       this.authData = data;
       this.authData.exp = Number(this.jwtHelperService.getTokenExpirationDate(data.token));
       return this.authData;

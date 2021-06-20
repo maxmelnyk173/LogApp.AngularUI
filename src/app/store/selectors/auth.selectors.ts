@@ -30,3 +30,8 @@ export const getAccessToken = createSelector(
   getAuthData,
   authData => authData && authData.token
 )
+
+export const IsAuth = createSelector(
+  getAccessToken,
+  accessToken => !!accessToken
+)

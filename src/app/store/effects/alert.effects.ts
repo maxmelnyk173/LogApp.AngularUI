@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { tap } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 import * as fromAuthActions from 'src/app/store/actions/auth.actions';
 
 @Injectable()
@@ -23,6 +23,7 @@ export class AlertEffects {
     () => 
     this.actions$.pipe(
       ofType(fromAuthActions.loginSuccess),
+      first(),
       tap((action) => this.snackBar.open('Welcome back ' + action.authData.user.firstName, '\u2716', {
         duration: 2000,
         panelClass: ['success-snackbar']
