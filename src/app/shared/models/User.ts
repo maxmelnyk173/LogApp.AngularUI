@@ -1,8 +1,7 @@
 export interface User{
-    id: string | null,
-    firstName: string | null,
-    lastName: string | null,
-    email: string | null,
-    role: string | null,
-    position: string | null
+    id: string,
+    firstName: string,
+    lastName: string,
+    role: string,
+    position: string
 }

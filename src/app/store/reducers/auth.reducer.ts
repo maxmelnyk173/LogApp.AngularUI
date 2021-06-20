@@ -11,15 +11,14 @@ export interface State {
 
 export const initialState: State = {
   authData: {
-    token: null,
-    expiredAt: null,
+    token: '',
+    exp: 0,
     user: {
-      id: null,
-      firstName: null,
-      lastName: null,
-      email: null,
-      role: null,
-      position: null
+      id: '',
+      firstName: '',
+      lastName: '',
+      role: '',
+      position: ''
     }
   },
   error: null
@@ -39,15 +38,14 @@ export const reducer = createReducer(
     return {
       ...state,
       authData: {
-        token: null,
-        expiredAt: null,
+        token: '',
+        exp: 0,
         user: {
-          id: null,
-          firstName: null,
-          lastName: null,
-          email: null,
-          role: null,
-          position: null
+          id: '',
+          firstName: '',
+          lastName: '',
+          role: '',
+          position: ''
         }
       },
       error: action.error.error
