@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { AuthData } from 'src/app/shared/models/AuthData';
 import * as AuthActions from '../actions/auth.actions';
 
@@ -27,6 +27,9 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
+  on(AuthActions.login, state => ({
+    ...state
+  })),
   on(AuthActions.loginSuccess, (state, action) => {
     return {
       ...state,
@@ -51,6 +54,22 @@ export const reducer = createReducer(
       error: action.error.error
     }
   }),
-
+  on(AuthActions.logoutSuccess, AuthActions.logout, (state) => {
+    return {
+      ...state,
+      authData: {
+        token: '',
+        exp: 0,
+        user: {
+          id: '',
+          firstName: '',
+          lastName: '',
+          role: '',
+          position: ''
+        }
+      },
+      error: null
+    }
+  }),
 );
 

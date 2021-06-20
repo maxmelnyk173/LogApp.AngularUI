@@ -4,8 +4,7 @@
   <mat-sidenav #drawer class="sidenav" fixedInViewport 
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === true"
-      [disableClose]="(isHandset$ | async) === false">
+      [opened]="(isHandset$ | async) === false">
     <mat-toolbar>
       <mat-icon mat-list-icon>home</mat-icon>
     </mat-toolbar>
@@ -53,7 +52,7 @@
           <mat-icon>settings</mat-icon>
           <span>Settings</span>
         </button>
-        <button mat-menu-item [routerLink]="['/auth/login']">
+        <button mat-menu-item (click)="logout()">
           <mat-icon>logout</mat-icon>
           <span>Log out</span>
         </button>

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import * as fromAuthSelect from 'src/app/store/selectors/auth.selectors';
+import { logout } from 'src/app/store/actions/auth.actions';
+import { AppState } from 'src/app/store';
 
 @Component({
   selector: 'app-nav',
@@ -20,7 +22,11 @@ export class NavComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private store: Store) {
+  constructor(private breakpointObserver: BreakpointObserver, private store: Store<AppState>) {
     this.user$ = this.store.pipe(select(fromAuthSelect.getUserData));
+  }
+
+  logout(){
+    this.store.dispatch(logout());
   }
 }

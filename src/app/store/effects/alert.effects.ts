@@ -22,9 +22,9 @@ export class AlertEffects {
   loginSuccess$ = createEffect(
     () => 
     this.actions$.pipe(
-      ofType(fromAuthActions.loginSuccess),
+      ofType(),
       first(),
-      tap((action) => this.snackBar.open('Welcome back ' + action.authData.user.firstName, '\u2716', {
+      tap((action) => this.snackBar.open('Welcome back ', '\u2716', {
         duration: 2000,
         panelClass: ['success-snackbar']
       }))
@@ -39,6 +39,18 @@ export class AlertEffects {
       tap((action) => this.snackBar.open('Login Failed: ' + action.error, '\u2716', {
         duration: 2000,
         panelClass: ['error-snackbar']
+      }))
+    ),
+    { dispatch: false }
+  )
+
+  logout$ = createEffect(
+    () => 
+    this.actions$.pipe(
+      ofType(fromAuthActions.logout),
+      tap(() => this.snackBar.open('You are logged out', '\u2716', {
+        duration: 2000,
+        panelClass: ['info-snackbar']
       }))
     ),
     { dispatch: false }
