@@ -6,14 +6,34 @@ export const selectAuthState = createFeatureSelector<fromAuth.State>(
   fromAuth.authFeatureKey
 );
 
+export interface AuthData {
+  token: string,
+  exp: number,
+  user: User
+}
+
 export interface UserData {
   user: User
   isLoggedIn: boolean
 }
 
+export interface AccessToken {
+  token: string
+}
+
+export interface IsAuth {
+  isAuth: boolean;
+}
+
 export const getAuthData = createSelector(
   selectAuthState,
-  state => state.authData
+  (state: fromAuth.State): AuthData => {
+    return {
+      token: state.authData.token,
+      exp: state.authData.exp,
+      user: state.authData.user
+    }
+  }
 )
 
 export const getUserData = createSelector(
@@ -27,11 +47,19 @@ export const getUserData = createSelector(
 )
 
 export const getAccessToken = createSelector(
-  getAuthData,
-  authData => authData && authData.token
+  selectAuthState,
+  (state: fromAuth.State): AccessToken => {
+    return {
+      token: state.authData.token,
+    }
+  }
 )
 
 export const IsAuth = createSelector(
-  getAccessToken,
-  accessToken => !!accessToken
+  selectAuthState,
+  (state: fromAuth.State): IsAuth => {
+    return {
+      isAuth: state.authData.token != ""
+    }
+  }
 )

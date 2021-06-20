@@ -22,9 +22,9 @@ export class AuthInterceptor implements HttpInterceptor {
       select(getAccessToken),
       first(),
       mergeMap(token => {
-        const authToken = token ? request.clone({
+        const authToken = token.token ? request.clone({
           setHeaders: {
-            Authorization: `Bearer ${ token }`
+            Authorization: `Bearer ${ token.token }`
           }
         }) : request;
 

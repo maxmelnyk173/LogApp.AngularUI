@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import * as fromAuth from '../../store/reducers/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from '../../store/effects/auth.effects';
@@ -13,7 +13,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { JwtModule } from '@auth0/angular-jwt';
 
 
 
@@ -37,4 +36,4 @@ import { JwtModule } from '@auth0/angular-jwt';
     EffectsModule.forFeature([AuthEffects])
   ]
 })
-export class AuthModule { }
+export class AuthModule {}

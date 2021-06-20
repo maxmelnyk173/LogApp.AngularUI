@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { reducers, metaReducers } from './store';
@@ -33,6 +33,7 @@ import { AlertEffects } from './store/effects/alert.effects';
 import { RouteEffects } from './store/effects/route.effects';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { initAuthData } from './store/actions/auth.actions';
 
 @NgModule({
   declarations: [
@@ -77,4 +78,8 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
   }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(store: Store){
+    store.dispatch(initAuthData())
+  }
+}
