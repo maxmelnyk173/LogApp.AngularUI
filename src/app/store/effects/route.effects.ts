@@ -13,7 +13,7 @@ export class RouteEffects {
     () => 
     this.actions$.pipe(
       ofType(fromAuthActions.loginSuccess),
-      tap(() => this.router.navigate(['']))
+      tap(() => this.router)
     ),
     { dispatch: false }
   );

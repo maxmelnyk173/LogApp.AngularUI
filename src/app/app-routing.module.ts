@@ -12,6 +12,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
+  {
+    path: 'order',
+    loadChildren: () =>
+      import('./modules/orders/orders.module').then(
+        (m) => m.OrdersModule
+      ),
+  },
 ];
 
 @NgModule({

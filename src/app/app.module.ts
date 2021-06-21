@@ -34,6 +34,7 @@ import { RouteEffects } from './store/effects/route.effects';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { initAuthData } from './store/actions/auth.actions';
+import { OrdersModule } from './modules/orders/orders.module';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { initAuthData } from './store/actions/auth.actions';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([SpinnerEffects, AlertEffects, RouteEffects]),
+    OrdersModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
