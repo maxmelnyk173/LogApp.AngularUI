@@ -48,7 +48,7 @@
           {{user.user.firstName}} {{user.user.lastName}}
         </span>
         <mat-divider></mat-divider>
-        <button mat-menu-item>
+        <button mat-menu-item [routerLink]="['/account']">
           <mat-icon>settings</mat-icon>
           <span>Settings</span>
         </button>
