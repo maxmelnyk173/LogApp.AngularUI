@@ -1,55 +1,49 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Account } from './account.model';
 import * as AccountActions from './account.actions';
+import { User } from '../resources/User';
 
 export const accountsFeatureKey = 'accounts';
 
-export interface State extends EntityState<Account> {
+export interface State extends EntityState<User> {
   // additional entities state properties
+  error: any
+  selectedUserId: string | null;
 }
 
-export const adapter: EntityAdapter<Account> = createEntityAdapter<Account>();
+export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
+  selectedUserId: null,
+  error: null
 });
-
 
 export const reducer = createReducer(
   initialState,
-  on(AccountActions.addAccount,
-    (state, action) => adapter.addOne(action.account, state)
+  on(AccountActions.loadUsersSuccessed, 
+    (state, action) => adapter.setAll(action.users, state)
   ),
-  on(AccountActions.upsertAccount,
-    (state, action) => adapter.upsertOne(action.account, state)
+  on(
+    AccountActions.loadCurrentUserSuccessed,
+    (state, action) => adapter.setOne(action.user, state)
   ),
-  on(AccountActions.addAccounts,
-    (state, action) => adapter.addMany(action.accounts, state)
-  ),
-  on(AccountActions.upsertAccounts,
-    (state, action) => adapter.upsertMany(action.accounts, state)
-  ),
-  on(AccountActions.updateAccount,
-    (state, action) => adapter.updateOne(action.account, state)
-  ),
-  on(AccountActions.updateAccounts,
-    (state, action) => adapter.updateMany(action.accounts, state)
-  ),
-  on(AccountActions.deleteAccount,
-    (state, action) => adapter.removeOne(action.id, state)
-  ),
-  on(AccountActions.deleteAccounts,
-    (state, action) => adapter.removeMany(action.ids, state)
-  ),
-  on(AccountActions.loadAccounts,
-    (state, action) => adapter.setAll(action.accounts, state)
-  ),
-  on(AccountActions.clearAccounts,
-    state => adapter.removeAll(state)
+  on(
+    AccountActions.loadCurrentUserFailed,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error
+      }
+    }
   ),
 );
 
+export function reduserReducer(state: State | undefined, action: Action) {
+  return reducer(state, action);
+}
+ 
+export const getSelectedUserId = (state: State) => state.selectedUserId;
 
 export const {
   selectIds,
@@ -57,3 +51,12 @@ export const {
   selectAll,
   selectTotal,
 } = adapter.getSelectors();
+
+// select the array of user ids
+export const selectUserIds = selectIds;
+ 
+// select the dictionary of user entities
+export const selectUserEntities = selectEntities;
+ 
+// select the array of users
+export const selectAllUsers = selectAll;

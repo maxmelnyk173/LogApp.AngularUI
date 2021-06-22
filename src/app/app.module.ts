@@ -11,6 +11,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthModule } from './modules/auth/auth.module';
 import { PagesModule } from './pages/pages.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { initAuthData } from './store/actions/auth.actions';
+import { OrdersModule } from './modules/orders/orders.module';
+import { AccountModule } from './modules/account/account.module';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 //Components
 import { AppComponent } from './app.component';
@@ -31,11 +37,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SpinnerEffects } from './store/effects/spinner.effects';
 import { AlertEffects } from './store/effects/alert.effects';
 import { RouteEffects } from './store/effects/route.effects';
-import { JwtModule } from '@auth0/angular-jwt';
-import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
-import { initAuthData } from './store/actions/auth.actions';
-import { OrdersModule } from './modules/orders/orders.module';
-import { AccountModule } from './modules/account/account.module';
 
 @NgModule({
   declarations: [
@@ -47,11 +48,12 @@ import { AccountModule } from './modules/account/account.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     AuthModule,
     PagesModule,
+    FlexLayoutModule,
 
     //Mat UI modules
-    BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,

@@ -8,14 +8,22 @@ import * as fromAccount from './state/account.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AccountEffects } from './state/account.effects';
 
+//UI modules
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import { UserComponent } from './user/user.component';
+
 
 @NgModule({
   declarations: [
-    AccountComponent
+    AccountComponent,
+    UserComponent
   ],
   imports: [
     CommonModule,
     AccountRoutingModule,
+    MatTabsModule,
+    MatCardModule,
     StoreModule.forFeature(fromAccount.accountsFeatureKey, fromAccount.reducer),
     EffectsModule.forFeature([AccountEffects])
   ]

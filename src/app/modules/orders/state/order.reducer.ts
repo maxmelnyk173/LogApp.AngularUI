@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as OrderActions from './order.actions';
-import { Order } from '../resources/order';
+import { Order } from '../resources/Order';
 
 export const ordersFeatureKey = 'orders';
 
