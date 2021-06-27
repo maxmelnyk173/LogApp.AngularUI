@@ -1,4 +1,68 @@
-<p>user works!</p>
-<div *ngIf="user$ | async as user">
-    
+<div fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="0.5rem"
+    fxLayoutGap.xs="0"
+    class="updateUserData">
+
+    <div fxFlex="50%" fxFlex.xs="100%">
+        <form method="POST" class="updateUserForm" [formGroup]="updateUserDataForm" (ngSubmit)="submitDataUpdates()" >
+            <h2>Update Account Data</h2>
+            <mat-form-field appearance="fill" class="userFormInput">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" required>
+                <mat-error *ngIf="updateUserDataForm.controls.firstName.dirty && updateUserDataForm.controls.firstName.invalid">
+                    <span *ngIf="updateUserDataForm.controls.firstName.errors?.required">Field is mandatory</span>
+                  </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="userFormInput">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" required>
+                <mat-error *ngIf="updateUserDataForm.controls.lastName.dirty && updateUserDataForm.controls.lastName.invalid">
+                    <span *ngIf="updateUserDataForm.controls.lastName.errors?.required">Field is mandatory</span>
+                  </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="userFormInput">
+                <mat-label>Position</mat-label>
+                <input matInput formControlName="position" required>
+                <mat-error *ngIf="updateUserDataForm.controls.position.dirty && updateUserDataForm.controls.position.invalid">
+                    <span *ngIf="updateUserDataForm.controls.position.errors?.required">Field is mandatory</span>
+                  </mat-error>
+            </mat-form-field>
+            <button type="submit" mat-raised-button color="primary"
+            [attr.aria-label]="'Save Data'" class="userFormBtn">
+                Save Data
+            </button>
+        </form>
+    </div>
+    <div fxFlex="50%" fxFlex.xs="100%">
+        <form method="POST" class="updateUserForm" [formGroup]="updateUserPasswordForm" (ngSubmit)="submitPasswordUpdates()" >
+            <h2>Change Password</h2>
+            <mat-form-field appearance="fill" class="userFormInput">
+                <mat-label>Enter new password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                <button type="button" mat-icon-button matSuffix (click)="hidePassword()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="updateUserPasswordForm.controls.password.dirty && updateUserPasswordForm.controls.password.invalid">
+                    <span *ngIf="updateUserPasswordForm.controls.password.errors?.required">Field is mandatory</span>
+                    <span *ngIf="updateUserPasswordForm.controls.password.errors?.minlength">Input lenght is invalid</span>
+                  </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="userFormInput">
+                <mat-label>Confirm new password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordConfirm" required>
+                <button type="button" mat-icon-button matSuffix (click)="hidePassword()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="updateUserPasswordForm.controls.passwordConfirm.dirty && updateUserPasswordForm.controls.passwordConfirm.invalid">
+                    <span *ngIf="updateUserPasswordForm.controls.passwordConfirm.errors?.required">Field is mandatory</span>
+                    <span *ngIf="updateUserPasswordForm.controls.passwordConfirm.errors?.minlength">Input lenght is invalid</span>
+                </mat-error>
+            </mat-form-field>
+            <button type="submit" mat-raised-button color="primary"
+            [attr.aria-label]="'Change Password'" class="userFormBtn">
+            Change Password
+            </button>
+        </form>
+    </div>
 </div>

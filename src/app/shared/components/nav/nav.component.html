@@ -61,7 +61,8 @@
         <mat-icon>login</mat-icon>
       </button>
     </mat-toolbar>
-
+    <mat-progress-bar mode="indeterminate" *ngIf="loading$ | async"></mat-progress-bar>
+    
     <!--MainContent-->
     <div class="mainContent">
       <ng-content></ng-content>

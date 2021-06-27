@@ -8,7 +8,7 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-    users: AccountReducer.userReducer,
+    users: AccountReducer.reducer,
 };
 
 export const selectUserState = createFeatureSelector<AccountReducer.State>(
@@ -17,15 +17,17 @@ export const selectUserState = createFeatureSelector<AccountReducer.State>(
 
 export const selectUserIds = createSelector(
     selectUserState,
-    AccountReducer.selectUserIds // shorthand for usersState => fromUser.selectUserIds(usersState)
+    AccountReducer.selectIds
 );
+
 export const selectUserEntities = createSelector(
     selectUserState,
-    AccountReducer.selectUserEntities
+    AccountReducer.selectEntities
 );
+
 export const selectAllUsers = createSelector(
     selectUserState,
-    AccountReducer.selectAllUsers
+    AccountReducer.selectAll
 );
 
 export const selectCurrentUserId = createSelector(
@@ -36,5 +38,8 @@ export const selectCurrentUserId = createSelector(
 export const selectCurrentUser = createSelector(
     selectUserEntities,
     selectCurrentUserId,
-    (userEntities, userId) => userEntities[userId]
+    (userEntities, userId) => {
+        return userId ? userEntities[userId] : null
+    }
 );
+   

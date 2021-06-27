@@ -6,15 +6,13 @@ import { User } from '../resources/User';
 export const accountsFeatureKey = 'accounts';
 
 export interface State extends EntityState<User> {
-  // additional entities state properties
-  error: any
   selectedUserId: string | null;
+  error: any
 }
 
 export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
 
 export const initialState: State = adapter.getInitialState({
-  // additional entity state properties
   selectedUserId: null,
   error: null
 });
@@ -26,7 +24,20 @@ export const reducer = createReducer(
   ),
   on(
     AccountActions.loadCurrentUserSuccessed,
-    (state, action) => adapter.setOne(action.user, state)
+    (state, action) => adapter.upsertOne(action.user, state)
+  ),
+  on(
+    AccountActions.chooseCurrentUser,
+    (state, action) => ({
+      ...state,
+      selectedUserId: action.selectedUserId
+    })
+  ),
+  on(
+    AccountActions.updateUserData,
+    (state, action) => {
+      return adapter.updateOne({ id: action.body.id, changes: action.body }, state);
+    }
   ),
   on(
     AccountActions.loadCurrentUserFailed,
@@ -51,12 +62,3 @@ export const {
   selectAll,
   selectTotal,
 } = adapter.getSelectors();
-
-// select the array of user ids
-export const selectUserIds = selectIds;
- 
-// select the dictionary of user entities
-export const selectUserEntities = selectEntities;
- 
-// select the array of users
-export const selectAllUsers = selectAll;

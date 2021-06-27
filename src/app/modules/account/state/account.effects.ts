@@ -33,5 +33,23 @@ export class AccountEffects {
     );
   });
 
+  chooseCurrentUser$ = createEffect(
+    () => this.actions$.pipe(
+      ofType(AccountActions.loadCurrentUserSuccessed),
+      map(user => AccountActions.chooseCurrentUser({ selectedUserId: user.user.id }))
+    )
+  );
+
+  updateUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AccountActions.updateUserData),
+      mergeMap((action) =>
+        this.userService.updateUserData(action.body).pipe(
+          map((user) => AccountActions.updateUserDataSucced({ user })),
+          catchError(error => of(AccountActions.updateUserDataFailed({ error : error.error }))))
+      ),
+    );
+  });
+
   constructor(private actions$: Actions, private userService: UserService) {}
 }

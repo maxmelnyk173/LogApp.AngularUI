@@ -1,10 +1,10 @@
-<div class="settingsContainer">
-    <mat-card>
+<div class="settingsContainer" *ngIf="user$ | async as user">
+    <mat-card fxLayout fxFlexFill>
         <mat-tab-group>
             <mat-tab label="Settings">
                 <app-user></app-user>
             </mat-tab>
-            <mat-tab label="Admin"> 
+            <mat-tab label="Admin" *ngIf="user.role == 'Admin'"> 
                 Content 2 
             </mat-tab>
         </mat-tab-group>

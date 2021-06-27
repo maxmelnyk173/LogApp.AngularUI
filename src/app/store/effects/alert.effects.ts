@@ -22,9 +22,8 @@ export class AlertEffects {
   loginSuccess$ = createEffect(
     () => 
     this.actions$.pipe(
-      ofType(),
-      first(),
-      tap((action) => this.snackBar.open('Welcome back ', '\u2716', {
+      ofType(fromAuthActions.firstLoginSuccess),
+      tap(() => this.snackBar.open('Welcome back', '\u2716', {
         duration: 2000,
         panelClass: ['success-snackbar']
       }))

@@ -19,7 +19,12 @@ export class AuthEffects {
         email: action.email,
         password: action.password
       }).pipe(
-        map(authData => AuthActions.loginSuccess({ authData })),
+        switchMap((authData) => {
+          return [
+            AuthActions.loginSuccess({ authData }),
+            AuthActions.firstLoginSuccess()
+          ];
+        }),
         catchError(error => of(AuthActions.loginFailure({ error : error.error })))
       ))
     )

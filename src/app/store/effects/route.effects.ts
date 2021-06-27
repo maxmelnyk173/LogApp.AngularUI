@@ -12,8 +12,8 @@ export class RouteEffects {
   homeAfterSuccesLogin$ = createEffect(
     () => 
     this.actions$.pipe(
-      ofType(fromAuthActions.loginSuccess),
-      tap(() => this.router)
+      ofType(fromAuthActions.firstLoginSuccess),
+      tap(() => this.router.navigate(['']))
     ),
     { dispatch: false }
   );

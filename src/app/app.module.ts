@@ -32,6 +32,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 //Effects
 import { SpinnerEffects } from './store/effects/spinner.effects';
@@ -63,6 +64,7 @@ import { RouteEffects } from './store/effects/route.effects';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatDividerModule,
+    MatProgressBarModule,
 
     JwtModule.forRoot({
       config:{

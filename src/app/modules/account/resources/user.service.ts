@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppSettings } from 'src/app/common/appSettings';
 import { getUserData } from 'src/app/store/selectors/auth.selectors';
-import { User } from '../resources/User';
+import { UpdateUser, User } from '../resources/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private http: HttpClient, store: Store) { 
+  constructor(private http: HttpClient) { 
   }
 
   getAllUsers(){
@@ -17,7 +17,10 @@ export class UserService {
   }
 
   getUser(id: string){
-    let user = this.http.get<User>(AppSettings.baseUrl + "Account/user/" + id);
-    return user;
+    return this.http.get<User>(AppSettings.baseUrl + "Account/user/" + id);
+  }
+
+  updateUserData(body: UpdateUser){
+    return this.http.put<UpdateUser>(AppSettings.baseUrl + "Account/user", body);
   }
 }
