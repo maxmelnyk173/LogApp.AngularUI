@@ -6,6 +6,10 @@ export const login = createAction(
   props<{ email: string, password: string }>()
 );
 
+export const firstLoginSuccess = createAction(
+  '[Auth Effect] First Login Success'
+);
+
 export const loginSuccess = createAction(
   '[Auth Effect] Login User Success',
   props<{ authData: AuthData}>()

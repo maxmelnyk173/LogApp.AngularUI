@@ -12,7 +12,7 @@ export class SpinnerEffects {
   spinneron$ = createEffect(
     () => 
     this.actions$.pipe(
-      ofType(),
+      ofType(fromAuthActions.login),
       tap(() => this.loader.show())
     ),
     { dispatch: false }
@@ -21,7 +21,7 @@ export class SpinnerEffects {
   spinneroff$ = createEffect(
     () => 
     this.actions$.pipe(
-      ofType(),
+      ofType(fromAuthActions.firstLoginSuccess),
       tap(() => this.loader.hide())
     ),
     { dispatch: false }

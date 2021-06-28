@@ -6,6 +6,8 @@ import { select, Store } from '@ngrx/store';
 import * as fromAuthSelect from 'src/app/store/selectors/auth.selectors';
 import { logout } from 'src/app/store/actions/auth.actions';
 import { AppState } from 'src/app/store';
+import { ThemePalette } from '@angular/material/core';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-nav',
@@ -14,6 +16,7 @@ import { AppState } from 'src/app/store';
 })
 export class NavComponent {
 
+  loading$ = this.loader.loading$;
   user$: Observable<fromAuthSelect.UserData>;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -22,7 +25,7 @@ export class NavComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private store: Store<AppState>) {
+  constructor(private breakpointObserver: BreakpointObserver, private store: Store<AppState>, private loader: SpinnerService) {
     this.user$ = this.store.pipe(select(fromAuthSelect.getUserData));
   }
 

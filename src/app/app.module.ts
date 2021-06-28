@@ -11,6 +11,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthModule } from './modules/auth/auth.module';
 import { PagesModule } from './pages/pages.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { initAuthData } from './store/actions/auth.actions';
+import { OrdersModule } from './modules/orders/orders.module';
+import { AccountModule } from './modules/account/account.module';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 //Components
 import { AppComponent } from './app.component';
@@ -26,14 +32,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 //Effects
 import { SpinnerEffects } from './store/effects/spinner.effects';
 import { AlertEffects } from './store/effects/alert.effects';
 import { RouteEffects } from './store/effects/route.effects';
-import { JwtModule } from '@auth0/angular-jwt';
-import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
-import { initAuthData } from './store/actions/auth.actions';
 
 @NgModule({
   declarations: [
@@ -45,11 +49,12 @@ import { initAuthData } from './store/actions/auth.actions';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     AuthModule,
     PagesModule,
+    FlexLayoutModule,
 
     //Mat UI modules
-    BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,
@@ -59,6 +64,7 @@ import { initAuthData } from './store/actions/auth.actions';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatDividerModule,
+    MatProgressBarModule,
 
     JwtModule.forRoot({
       config:{
@@ -70,6 +76,8 @@ import { initAuthData } from './store/actions/auth.actions';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([SpinnerEffects, AlertEffects, RouteEffects]),
+    OrdersModule,
+    AccountModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

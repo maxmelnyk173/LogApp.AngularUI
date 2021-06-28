@@ -12,7 +12,7 @@ export class RouteEffects {
   homeAfterSuccesLogin$ = createEffect(
     () => 
     this.actions$.pipe(
-      ofType(fromAuthActions.loginSuccess),
+      ofType(fromAuthActions.firstLoginSuccess),
       tap(() => this.router.navigate(['']))
     ),
     { dispatch: false }
