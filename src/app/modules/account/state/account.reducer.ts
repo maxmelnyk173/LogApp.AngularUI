@@ -41,6 +41,8 @@ export const reducer = createReducer(
   ),
   on(
     AccountActions.loadCurrentUserFailed,
+    AccountActions.updateUserDataFailed,
+    AccountActions.loadUsersFailed,
     (state, action) => {
       return {
         ...state,

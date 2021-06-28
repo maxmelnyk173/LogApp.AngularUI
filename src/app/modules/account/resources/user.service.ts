@@ -1,15 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Observable, throwError } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AppSettings } from 'src/app/common/appSettings';
-import { getUserData } from 'src/app/store/selectors/auth.selectors';
 import { UpdateUser, User } from '../resources/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+  user$: Observable<UpdateUser>;
+
   constructor(private http: HttpClient) { 
+    this.user$ = new Observable<UpdateUser>();
   }
 
   getAllUsers(){
@@ -21,6 +25,15 @@ export class UserService {
   }
 
   updateUserData(body: UpdateUser){
-    return this.http.put<UpdateUser>(AppSettings.baseUrl + "Account/user", body);
+    return this.http.put<any>(AppSettings.baseUrl + "Account/user", body, { observe: 'response' }).pipe(
+      switchMap((data) => {
+        if (data.status == 204) {
+          this.user$ = new Observable(user => user.next(body))
+          return this.user$;
+        } else {
+          return throwError(data);
+        }
+      })
+    );
   }
 }

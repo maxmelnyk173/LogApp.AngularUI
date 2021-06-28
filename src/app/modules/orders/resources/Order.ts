@@ -1,5 +1,4 @@
 export interface Order{
-    id: string,
     lotName: string,
     orderType: number,
     packingType: number,

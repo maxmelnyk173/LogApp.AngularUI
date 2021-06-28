@@ -21,7 +21,6 @@ export class AccountEffects {
     );
   });
 
-
   loadUser$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AccountActions.loadCurrentUser),

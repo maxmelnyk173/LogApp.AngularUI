@@ -44,10 +44,6 @@
         <mat-icon>account_circle</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <span mat-menu-item>
-          {{user.user.firstName}} {{user.user.lastName}}
-        </span>
-        <mat-divider></mat-divider>
         <button mat-menu-item [routerLink]="['/account']">
           <mat-icon>settings</mat-icon>
           <span>Settings</span>
@@ -69,7 +65,7 @@
     </div>
 
     <!--Footer-->
-    <footer class="footer">Footer</footer>
+    <footer class="footer">&#169; LogApp 2021</footer>
 
   </mat-sidenav-content>
 </mat-sidenav-container>
