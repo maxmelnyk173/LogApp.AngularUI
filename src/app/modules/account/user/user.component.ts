@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/models/User';
-import { selectCurrentUser } from '../state/account.selectors';
-import * as fromAccountActions from '../state/account.actions';
+import { selectCurrentUser } from '../state/selectors/account.selectors';
+import * as fromAccountActions from '../state/actions/account.actions';
 import { UpdateUser } from '../resources/User';
 
 @Component({

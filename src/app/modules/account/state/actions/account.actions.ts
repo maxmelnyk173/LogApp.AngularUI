@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import { UpdateUser, User } from '../resources/User';
+import { UpdateUser, User } from '../../resources/User';
 
 /**
  * User Section

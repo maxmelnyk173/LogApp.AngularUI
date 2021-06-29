@@ -5,7 +5,7 @@
                 <app-user></app-user>
             </mat-tab>
             <mat-tab label="Admin" *ngIf="user.role == 'Admin'"> 
-                Content 2 
+                <app-admin></app-admin>
             </mat-tab>
         </mat-tab-group>
     </mat-card>

@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import * as AccountActions from './account.actions';
-import { User } from '../resources/User';
+import * as AccountActions from '../actions/account.actions';
+import { User } from '../../resources/User';
 
 export const accountsFeatureKey = 'accounts';
 

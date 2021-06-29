@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { getUserData } from 'src/app/store/selectors/auth.selectors';
 import { User } from './resources/User';
-import * as fromAccountActions from './state/account.actions';
-import { selectCurrentUser } from './state/account.selectors';
+import * as fromAccountActions from './state/actions/account.actions';
+import { selectCurrentUser } from './state/selectors/account.selectors';
 
 @Component({
   selector: 'app-account',

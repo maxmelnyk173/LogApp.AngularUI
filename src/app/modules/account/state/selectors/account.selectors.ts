@@ -1,7 +1,7 @@
 import {   createSelector, createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 
-import * as AccountReducer from './account.reducer';
-import * as AccountModel from '../resources/User';
+import * as AccountReducer from '../reducers/account.reducer';
+import * as AccountModel from '../../resources/User';
 
 export interface State {
     users: AccountReducer.State;
