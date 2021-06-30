@@ -22,10 +22,10 @@ export interface AppState {
   [fromOrder.ordersFeatureKey]: fromOrder.State;
 
 [fromAccount.accountsFeatureKey]: fromAccount.State;
-[fromUsers.usersesFeatureKey]: fromUsers.State;
-[fromCarriers.carriersesFeatureKey]: fromCarriers.State;
-[fromCostcenters.costcentersesFeatureKey]: fromCostcenters.State;
-[fromShipmentStatuses.shipmentStatusesesFeatureKey]: fromShipmentStatuses.State;
+[fromUsers.usersFeatureKey]: fromUsers.State;
+[fromCarriers.carriersFeatureKey]: fromCarriers.State;
+[fromCostcenters.costcentersFeatureKey]: fromCostcenters.State;
+[fromShipmentStatuses.shipmentStatusesFeatureKey]: fromShipmentStatuses.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -36,13 +36,13 @@ export const reducers: ActionReducerMap<AppState> = {
 
   [fromAccount.accountsFeatureKey]: fromAccount.reducer,
 
-  [fromUsers.usersesFeatureKey]: fromUsers.reducer,
+  [fromUsers.usersFeatureKey]: fromUsers.reducer,
 
-  [fromCarriers.carriersesFeatureKey]: fromCarriers.reducer,
+  [fromCarriers.carriersFeatureKey]: fromCarriers.reducer,
 
-  [fromCostcenters.costcentersesFeatureKey]: fromCostcenters.reducer,
+  [fromCostcenters.costcentersFeatureKey]: fromCostcenters.reducer,
 
-  [fromShipmentStatuses.shipmentStatusesesFeatureKey]: fromShipmentStatuses.reducer,
+  [fromShipmentStatuses.shipmentStatusesFeatureKey]: fromShipmentStatuses.reducer,
 };
 
 

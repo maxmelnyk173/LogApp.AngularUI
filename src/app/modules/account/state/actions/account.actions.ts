@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
-import { UpdateUser, User } from '../../resources/User';
+import { CurrentUser } from '../../resources/models/User';
 
 /**
  * User Section
@@ -13,12 +12,7 @@ export const loadCurrentUser = createAction(
 
 export const loadCurrentUserSuccessed = createAction(
   '[Account Effect] Load User Successed',
-  props<{ user: User }>()
-);
-
-export const loadCurrentUserFailed = createAction(
-  '[Account Effect] Load User Failed',
-  props<{ error: any }>()
+  props<{ user: CurrentUser }>()
 );
 
 export const chooseCurrentUser = createAction(
@@ -26,38 +20,25 @@ export const chooseCurrentUser = createAction(
   props<{ selectedUserId: string }>()
 );
 
+export const loadCurrentUserFailed = createAction(
+  '[Account Effect] Load User Failed',
+  props<{ error: any }>()
+);
+
 /**
  * Update User Data
  */
 export const updateUserData = createAction(
   '[User Component] Update User Data',
-  props<{ body: UpdateUser }>()
+  props<{ body: CurrentUser }>()
 )
 
 export const updateUserDataSucced = createAction(
   '[User Component] Update User Succed ',
-  props<{ user: UpdateUser }>()
+  props<{ user: CurrentUser }>()
 )
 
 export const updateUserDataFailed = createAction(
   '[Account Effect] Update User Failed',
   props<{ error: any }>()
 )
-
-
-/**
- * Admin Section
- */
-export const loadUsers = createAction(
-  '[User Component] Load Users'
-);
-
-export const loadUsersSuccessed = createAction(
-  '[Account Effect] Load Users Successed',
-  props<{ users: User[] }>()
-);
-
-export const loadUsersFailed = createAction(
-  '[Account Effect] Load User Failed',
-  props<{ error: any }>()
-);

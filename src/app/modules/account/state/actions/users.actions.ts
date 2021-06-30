@@ -1,53 +1,55 @@
 import { createAction, props } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
+import { User } from '../../resources/models/User';
 
-import { Users } from '../../resources/users.model';
-
-export const loadUserss = createAction(
-  '[Users/API] Load Userss', 
-  props<{ userss: Users[] }>()
+/**
+ * Load Users
+ */
+export const loadUsers = createAction(
+  '[Admin Section] Load Users'
 );
 
-export const addUsers = createAction(
-  '[Users/API] Add Users',
-  props<{ users: Users }>()
+export const loadUsersSuccess = createAction(
+  '[User Effect] Load Users Success', 
+  props<{ users: User[] }>()
 );
 
-export const upsertUsers = createAction(
-  '[Users/API] Upsert Users',
-  props<{ users: Users }>()
+export const loadUsersFail = createAction(
+  '[User Effect] Load Users Fail', 
+  props<{ error: any }>()
 );
 
-export const addUserss = createAction(
-  '[Users/API] Add Userss',
-  props<{ userss: Users[] }>()
+/**
+ * Add User
+ */
+export const addUser = createAction(
+  '[Users/API] Add User',
+  props<{ user: User }>()
 );
 
-export const upsertUserss = createAction(
-  '[Users/API] Upsert Userss',
-  props<{ userss: Users[] }>()
+export const addUserSuccess = createAction(
+  '[User Effect] Add User Success', 
+  props<{ user: User }>()
 );
 
-export const updateUsers = createAction(
-  '[Users/API] Update Users',
-  props<{ users: Update<Users> }>()
+export const addUserFail = createAction(
+  '[User Effect] Add User Fail', 
+  props<{ error: any  }>()
 );
 
-export const updateUserss = createAction(
-  '[Users/API] Update Userss',
-  props<{ userss: Update<Users>[] }>()
-);
-
-export const deleteUsers = createAction(
+/**
+ * Delete User
+ */
+export const deleteUser = createAction(
   '[Users/API] Delete Users',
   props<{ id: string }>()
 );
 
-export const deleteUserss = createAction(
-  '[Users/API] Delete Userss',
-  props<{ ids: string[] }>()
+export const deleteUserSuccess = createAction(
+  '[User Effect] Delete User Success',
+  props<{ id: string }>()
 );
 
-export const clearUserss = createAction(
-  '[Users/API] Clear Userss'
+export const deleteUserFail = createAction(
+  '[User Effect] Delete User Fail', 
+  props<{ error: any }>()
 );

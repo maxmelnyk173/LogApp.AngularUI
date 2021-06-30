@@ -1,15 +1,15 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Costcenters } from '../../resources/costcenters.model';
-import * as CostcentersActions from '../actions/costcenters.actions';
+import { CostCenters } from '../../resources/models/CostCenter';
+import * as CostCentersActions from '../actions/cost-centers.actions';
 
-export const costcentersesFeatureKey = 'costcenters';
+export const costcentersFeatureKey = 'costcenters';
 
-export interface State extends EntityState<Costcenters> {
+export interface State extends EntityState<CostCenters> {
   // additional entities state properties
 }
 
-export const adapter: EntityAdapter<Costcenters> = createEntityAdapter<Costcenters>();
+export const adapter: EntityAdapter<CostCenters> = createEntityAdapter<CostCenters>();
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
@@ -18,36 +18,6 @@ export const initialState: State = adapter.getInitialState({
 
 export const reducer = createReducer(
   initialState,
-  on(CostcentersActions.addCostcenters,
-    (state, action) => adapter.addOne(action.costcenters, state)
-  ),
-  on(CostcentersActions.upsertCostcenters,
-    (state, action) => adapter.upsertOne(action.costcenters, state)
-  ),
-  on(CostcentersActions.addCostcenterss,
-    (state, action) => adapter.addMany(action.costcenterss, state)
-  ),
-  on(CostcentersActions.upsertCostcenterss,
-    (state, action) => adapter.upsertMany(action.costcenterss, state)
-  ),
-  on(CostcentersActions.updateCostcenters,
-    (state, action) => adapter.updateOne(action.costcenters, state)
-  ),
-  on(CostcentersActions.updateCostcenterss,
-    (state, action) => adapter.updateMany(action.costcenterss, state)
-  ),
-  on(CostcentersActions.deleteCostcenters,
-    (state, action) => adapter.removeOne(action.id, state)
-  ),
-  on(CostcentersActions.deleteCostcenterss,
-    (state, action) => adapter.removeMany(action.ids, state)
-  ),
-  on(CostcentersActions.loadCostcenterss,
-    (state, action) => adapter.setAll(action.costcenterss, state)
-  ),
-  on(CostcentersActions.clearCostcenterss,
-    state => adapter.removeAll(state)
-  ),
 );
 
 
