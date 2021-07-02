@@ -14,19 +14,9 @@ export const selectUserState = createFeatureSelector<AccountReducer.State>(
     AccountReducer.accountsFeatureKey
 );
 
-export const selectUserIds = createSelector(
-    selectUserState,
-    AccountReducer.selectIds
-);
-
 export const selectUserEntities = createSelector(
     selectUserState,
     AccountReducer.selectEntities
-);
-
-export const selectAllUsers = createSelector(
-    selectUserState,
-    AccountReducer.selectAll
 );
 
 export const selectCurrentUserId = createSelector(

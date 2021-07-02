@@ -31,12 +31,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { UsersListComponent } from './users/users-list/users-list.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CreateUserComponent } from './users/create-user/create-user.component';
 
 @NgModule({
   declarations: [
     AccountComponent,
     UserComponent,
-    AdminComponent
+    AdminComponent,
+    UsersListComponent,
+    CreateUserComponent
   ],
   imports: [
     CommonModule,
@@ -52,6 +60,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatInputModule,
     MatIconModule,
     MatExpansionModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
 
     StoreModule.forFeature(fromAccount.accountsFeatureKey, fromAccount.reducer),
     StoreModule.forFeature(fromUsers.usersFeatureKey, fromUsers.reducer),
