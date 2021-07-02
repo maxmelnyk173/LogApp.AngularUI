@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/shared/models/User';
-import { selectCurrentUser } from '../state/account.selectors';
-import * as fromAccountActions from '../state/account.actions';
-import { UpdateUser } from '../resources/User';
+import { selectCurrentUser } from '../state/selectors/account.selectors';
+import * as fromAccountActions from '../state/actions/account.actions';
+import { CurrentUser } from '../resources/models/User';
 
 @Component({
   selector: 'app-user',
@@ -15,8 +14,8 @@ import { UpdateUser } from '../resources/User';
 export class UserComponent implements OnInit {
 
   hide = true;
-  userId!: string | null | undefined;
-  user$!: Observable<User | null | undefined>
+  userId!: string | undefined;
+  user$!: Observable<CurrentUser | undefined | null>
   updateUserDataForm!: FormGroup;
   updateUserPasswordForm!: FormGroup;
 
@@ -45,13 +44,14 @@ export class UserComponent implements OnInit {
 
   initializeFormInputData(){
     this.user$.subscribe(data => {
-      this.updateUserDataForm.setValue({
-        firstName: data?.firstName,
-        lastName: data?.lastName,
-        position: data?.position
-     });
-
-     this.userId = data?.id
+      if(data != null && data != undefined){
+        this.updateUserDataForm.setValue({
+          firstName: data?.firstName,
+          lastName: data?.lastName,
+          position: data?.position
+       });
+       this.userId = data?.id;
+      }
     })
   }
 
@@ -78,7 +78,5 @@ export class UserComponent implements OnInit {
     if (!this.updateUserPasswordForm.valid) {
       return;
     }
-
-    console.log(this.updateUserPasswordForm.value)
   }
 }

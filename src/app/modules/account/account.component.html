@@ -4,8 +4,8 @@
             <mat-tab label="Settings">
                 <app-user></app-user>
             </mat-tab>
-            <mat-tab label="Admin" *ngIf="user.role == 'Admin'"> 
-                Content 2 
+            <mat-tab label="Admin" *ngIf="user.user.role == 'Admin'"> 
+                <app-admin></app-admin>
             </mat-tab>
         </mat-tab-group>
     </mat-card>

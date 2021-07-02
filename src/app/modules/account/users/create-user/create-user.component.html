@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>Create or Update User</h1>
+<div mat-dialog-content>
+    <form method="POST" class="updateUserForm" [formGroup]="createUserForm">
+        <mat-form-field appearance="fill" class="userFormInput">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" required>
+            <mat-error *ngIf="createUserForm.controls.firstName.dirty && createUserForm.controls.firstName.invalid">
+                <span *ngIf="createUserForm.controls.firstName.errors?.required">Field is mandatory</span>
+              </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="userFormInput">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" required>
+            <mat-error *ngIf="createUserForm.controls.lastName.dirty && createUserForm.controls.lastName.invalid">
+                <span *ngIf="createUserForm.controls.lastName.errors?.required">Field is mandatory</span>
+              </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="userFormInput">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="example@example.com" formControlName="email" required>
+            <mat-error *ngIf="createUserForm.controls.email.dirty && createUserForm.controls.email.invalid">
+              <span *ngIf="createUserForm.controls.email.errors?.required">Field is mandatory</span>
+              <span *ngIf="createUserForm.controls.email.errors?.email">Data entered are invalid</span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="userFormInput">
+            <mat-label>Role</mat-label>
+            <input matInput formControlName="role" required>
+            <mat-error *ngIf="createUserForm.controls.role.dirty && createUserForm.controls.role.invalid">
+                <span *ngIf="createUserForm.controls.role.errors?.required">Field is mandatory</span>
+              </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="userFormInput">
+            <mat-label>Position</mat-label>
+            <input matInput formControlName="position" required>
+            <mat-error *ngIf="createUserForm.controls.role.dirty && createUserForm.controls.role.invalid">
+                <span *ngIf="createUserForm.controls.role.errors?.required">Field is mandatory</span>
+              </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-button (click)="save()" class="modelButton">Ok</button>
+</div>
