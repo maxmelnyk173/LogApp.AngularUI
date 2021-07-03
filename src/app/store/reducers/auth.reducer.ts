@@ -37,7 +37,25 @@ export const reducer = createReducer(
       error: null
     }
   }),
-  on(AuthActions.loginFailure, (state, action) => {
+  on(AuthActions.updateUserDataSucced, (state, action) => {
+    return {
+      ...state,
+      authData: {
+        token: state.authData.token,
+        exp: state.authData.exp,
+        user: {
+          id: action.user.id,
+          firstName: action.user.firstName,
+          lastName: action.user.lastName,
+          role: state.authData.user.role,
+          position: action.user.position
+        }
+      },
+      error: null
+    }
+  }),
+  on(AuthActions.loginFailure, AuthActions.updateUserDataFailed,
+    (state, action) => {
     return {
       ...state,
       authData: {
@@ -71,5 +89,6 @@ export const reducer = createReducer(
       error: null
     }
   }),
+
 );
 

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { getUserData, UserData } from 'src/app/store/selectors/auth.selectors';
-import * as fromAccountActions from './state/actions/account.actions';
+import * as fromAuthSelect from 'src/app/store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-account',
@@ -11,15 +10,12 @@ import * as fromAccountActions from './state/actions/account.actions';
 })
 export class AccountComponent implements OnInit {
 
-  user$!: Observable<UserData>
+  user$: Observable<fromAuthSelect.UserData>;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store) { 
+    this.user$ = store.pipe(select(fromAuthSelect.getUserData));
+  }
 
   ngOnInit(): void {
-    this.store.select(getUserData).subscribe((params) => {
-      this.store.dispatch(fromAccountActions.loadCurrentUser({ id : params.user.id }));
-    });
-
-    this.user$ = this.store.pipe(select(getUserData));
   }
 }

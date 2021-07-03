@@ -39,18 +39,6 @@ export class UserService {
     );
   }
 
-  updateUserData(body: CurrentUser){
-    return this.http.put<any>(AppSettings.baseUrl + "Account/account-data", body, { observe: 'response' }).pipe(
-      switchMap(data => {
-        if (data.status == 204) {
-          return  new Observable<CurrentUser>(user => user.next(body));
-        } else {
-          return throwError(data);
-        }
-      })
-    );
-  }
-
   updateUser(body: User){
     return this.http.put<string>(AppSettings.baseUrl + "Account/user", body, { observe: 'response' }).pipe(
       switchMap(data => {

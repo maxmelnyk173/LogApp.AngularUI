@@ -7,6 +7,7 @@ import * as AuthActions from '../actions/auth.actions';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { select, Store } from '@ngrx/store';
 import { IsAuth } from '../selectors/auth.selectors';
+import { AuthData } from 'src/app/shared/models/AuthData';
 
 
 
@@ -30,12 +31,41 @@ export class AuthEffects {
     )
   );
 
+  updateUserData$ = createEffect(
+    () => this.actions$.pipe(
+      ofType(AuthActions.updateUserData),
+      switchMap(action => this.authSerice.updateUserData(action.body).pipe(
+        map((data) => AuthActions.updateUserDataSucced({ user : data })),
+        catchError(error => of(AuthActions.updateUserDataFailed({ error : error.error })))
+      ))
+    )
+  )
+
+  saveDataToLocalStorageOnUpdate$ = createEffect(
+    () => this.actions$.pipe(
+      ofType(AuthActions.updateUserDataSucced),
+      map(data => {
+        const extractedAuthData = localStorage.getItem("AuthData");
+        if(extractedAuthData){
+          const authData = JSON.parse(extractedAuthData) as AuthData;
+          authData.user.id = data.user.id;
+          authData.user.firstName = data.user.firstName;
+          authData.user.lastName = data.user.lastName;
+          authData.user.position = data.user.position;
+          console.log(authData);
+          localStorage.setItem("AuthData", JSON.stringify(authData as AuthData));
+        }
+      })
+    ),
+    { dispatch: false }
+  )
+
   saveDataToLocalStorage$ = createEffect(
     () => this.actions$.pipe(
       ofType(AuthActions.loginSuccess),
       tap(data => {
         const {type, ...authData} = data;
-        localStorage.setItem("AuthData", JSON.stringify(authData))
+        localStorage.setItem("AuthData", JSON.stringify(authData.authData as AuthData))
       })
     ),
     { dispatch: false }
@@ -50,12 +80,12 @@ export class AuthEffects {
           return AuthActions.logoutSuccess();
         }
 
-        const authData = JSON.parse(extractedAuthData);
+        const authData = JSON.parse(extractedAuthData) as AuthData;
         if((authData.exp - (1 * 1000) - Date.now()) < 0){
           return AuthActions.logoutSuccess();
         }
 
-        return AuthActions.loginSuccess(authData);
+        return AuthActions.loginSuccess({ authData });
       })
     )
   )

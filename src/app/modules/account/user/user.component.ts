@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { selectCurrentUser } from '../state/selectors/account.selectors';
-import * as fromAccountActions from '../state/actions/account.actions';
+import { select, Store } from '@ngrx/store';
 import { CurrentUser } from '../resources/models/User';
+
+import * as fromAuthSelect from 'src/app/store/selectors/auth.selectors';
+import { updateUserData } from 'src/app/store/actions/auth.actions';
 
 @Component({
   selector: 'app-user',
@@ -14,8 +14,7 @@ import { CurrentUser } from '../resources/models/User';
 export class UserComponent implements OnInit {
 
   hide = true;
-  userId!: string | undefined;
-  user$!: Observable<CurrentUser | undefined | null>
+  user!: CurrentUser;
   updateUserDataForm!: FormGroup;
   updateUserPasswordForm!: FormGroup;
 
@@ -23,7 +22,14 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user$ = this.store.select(selectCurrentUser);
+    this.store.pipe(select(fromAuthSelect.getUserData)).subscribe(result =>{
+      this.user = {
+        id: result.user.id,
+        firstName: result.user.firstName,
+        lastName: result.user.lastName,
+        position: result.user.position
+      }
+    });
 
     this.createForms();
     this.initializeFormInputData();
@@ -43,16 +49,11 @@ export class UserComponent implements OnInit {
   }
 
   initializeFormInputData(){
-    this.user$.subscribe(data => {
-      if(data != null && data != undefined){
-        this.updateUserDataForm.setValue({
-          firstName: data?.firstName,
-          lastName: data?.lastName,
-          position: data?.position
-       });
-       this.userId = data?.id;
-      }
-    })
+    this.updateUserDataForm.setValue({
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      position: this.user.position
+    });
   }
 
   hidePassword(){
@@ -63,15 +64,15 @@ export class UserComponent implements OnInit {
     if (!this.updateUserDataForm.valid) {
       return;
     }
-                              
-    this.store.dispatch(fromAccountActions.updateUserData({
-      body: {
-        id: this.userId!,
-        firstName: this.updateUserDataForm.value.firstName,
-        lastName: this.updateUserDataForm.value.lastName,
-        position: this.updateUserDataForm.value.position
-      }
-    }));
+
+    let user: CurrentUser = {
+      id: this.user.id,
+      firstName: this.updateUserDataForm.value.firstName,
+      lastName: this.updateUserDataForm.value.lastName,
+      position: this.updateUserDataForm.value.position
+    }
+           
+    this.store.dispatch(updateUserData({body : user}));
   }
 
   submitPasswordUpdates(){
