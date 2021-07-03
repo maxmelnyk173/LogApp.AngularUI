@@ -3,11 +3,11 @@ import { AuthData } from '../models/AuthData';
 import { HttpClient } from '@angular/common/http';
 import { map, switchMap} from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { getUserData } from 'src/app/store/selectors/auth.selectors';
+import { getAuthData, getUserData } from 'src/app/store/selectors/auth.selectors';
 import { select, Store } from '@ngrx/store';
 import { AppSettings } from 'src/app/common/appSettings';
-import { CurrentUser } from '../models/User';
 import { Observable, throwError } from 'rxjs';
+import { CurrentUser } from 'src/app/modules/account/resources/models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,9 @@ export class AuthService {
   constructor(private http: HttpClient, 
               private jwtHelperService: JwtHelperService, 
               store: Store) {
-    store.pipe(select(getUserData)).subscribe(data => {
-      return this.userId = data.user.id
+    store.pipe(select(getAuthData)).subscribe(data => {
+      this.userId = data.user.id;
+      this.authData = data;
     });
   }
 
@@ -45,7 +46,18 @@ export class AuthService {
     return this.http.put<any>(AppSettings.baseUrl + "Account/account-data", body, { observe: 'response' }).pipe(
       switchMap(data => {
         if (data.status == 204) {
-          return  new Observable<CurrentUser>(user => user.next(body));
+          let result: AuthData = {
+            token: this.authData.token,
+            exp: this.authData.exp,
+            user : {
+              id: body.id,
+              firstName: body.firstName,
+              lastName: body.lastName,
+              position: body.position,
+              role: this.authData.user.role
+            }
+          }
+          return  new Observable<AuthData>(user => user.next(result));
         } else {
           return throwError(data);
         }

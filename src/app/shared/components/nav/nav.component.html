@@ -40,10 +40,13 @@
       </button>
       <button mat-button [routerLink]="['']">LogApp</button>
       <span class="toolbar-spacer"></span>
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" *ngIf="user.isLoggedIn">
+      <button mat-icon-button [matMenuTriggerFor]="beforeMenu" aria-label="Example icon-button with a menu" *ngIf="user.isLoggedIn">
         <mat-icon>account_circle</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
+      <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <mat-toolbar>
+          {{user.user.firstName}} {{user.user.lastName}}
+        </mat-toolbar>
         <button mat-menu-item [routerLink]="['/account']">
           <mat-icon>settings</mat-icon>
           <span>Settings</span>

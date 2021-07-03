@@ -37,24 +37,14 @@ export const reducer = createReducer(
       error: null
     }
   }),
-  on(AuthActions.updateUserDataSucced, (state, action) => {
+  on(AuthActions.updateUserDataSuccess, (state, action) => {
     return {
       ...state,
-      authData: {
-        token: state.authData.token,
-        exp: state.authData.exp,
-        user: {
-          id: action.user.id,
-          firstName: action.user.firstName,
-          lastName: action.user.lastName,
-          role: state.authData.user.role,
-          position: action.user.position
-        }
-      },
+      authData: action.authData,
       error: null
     }
   }),
-  on(AuthActions.loginFailure, AuthActions.updateUserDataFailed,
+  on(AuthActions.loginFailure, AuthActions.updateUserDataFailure,
     (state, action) => {
     return {
       ...state,

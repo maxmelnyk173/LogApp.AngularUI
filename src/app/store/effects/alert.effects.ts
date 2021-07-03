@@ -57,47 +57,11 @@ export class AlertEffects {
     { dispatch: false }
   )
 
-  loadingDataFailed$ = createEffect(
-    () => 
-    this.actions$.pipe(
-      ofType(fromUserActions.loadUsersFail, fromAccountActions.loadCurrentUserFailed),
-      tap((error) => this.snackBar.open('Loading Failed: ' + error.error, '\u2716', {
-        duration: 2000,
-        panelClass: ['error-snackbar']
-      }))
-    ),
-    { dispatch: false }
-  )
-
-  addingDataFailed$ = createEffect(
-    () => 
-    this.actions$.pipe(
-      ofType(fromUserActions.addUserFail),
-      tap((error) => this.snackBar.open('Creation Failed: ' + error.error, '\u2716', {
-        duration: 2000,
-        panelClass: ['error-snackbar']
-      }))
-    ),
-    { dispatch: false }
-  )
-
-  updatingDataFailed$ = createEffect(
-    () => 
-    this.actions$.pipe(
-      ofType(fromAccountActions.updateUserDataFailed),
-      tap((error) => this.snackBar.open('Updating Failed: ' + error.error, '\u2716', {
-        duration: 2000,
-        panelClass: ['error-snackbar']
-      }))
-    ),
-    { dispatch: false }
-  )
-
   requestCompleted$ = createEffect(
     () => 
     this.actions$.pipe(
-      ofType(fromUserActions.resetPasswordSuccess),
-      tap(() => this.snackBar.open('Request completed successfully', '\u2716', {
+      ofType(fromUserActions.resetPasswordSuccess, fromUserActions.addUserSuccess, fromUserActions.deleteUserSuccess, fromUserActions.updateUserSuccess),
+      tap(() => this.snackBar.open('Done!', '\u2716', {
         duration: 2000,
         panelClass: ['success-snackbar']
       }))
@@ -108,7 +72,8 @@ export class AlertEffects {
   requestFailed$ = createEffect(
     () => 
     this.actions$.pipe(
-      ofType(fromUserActions.resetPasswordFail),
+      ofType(fromUserActions.resetPasswordFail, fromUserActions.updateUserFail, fromAuthActions.updateUserDataFailure, fromUserActions.addUserFail, fromUserActions.loadUsersFail, 
+        fromUserActions.deleteUserFail),
       tap((error) => this.snackBar.open('An error occured: ' + error.error, '\u2716', {
         duration: 2000,
         panelClass: ['error-snackbar']

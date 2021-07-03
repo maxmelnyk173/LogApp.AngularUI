@@ -19,33 +19,6 @@ export const initialState: State = adapter.getInitialState({
 
 export const reducer = createReducer(
   initialState,
-  on(
-    AccountActions.loadCurrentUserSuccessed,
-    (state, action) => adapter.upsertOne(action.user, state)
-  ),
-  on(
-    AccountActions.chooseCurrentUser,
-    (state, action) => ({
-      ...state,
-      selectedUserId: action.selectedUserId
-    })
-  ),
-  on(
-    AccountActions.updateUserData,
-    (state, action) => {
-      return adapter.updateOne({ id: action.body.id, changes: action.body }, state);
-    }
-  ),
-  on(
-    AccountActions.loadCurrentUserFailed,
-    AccountActions.updateUserDataFailed,
-    (state, action) => {
-      return {
-        ...state,
-        error: action.error
-      }
-    }
-  ),
 );
 
 export function reduserReducer(state: State | undefined, action: Action) {
