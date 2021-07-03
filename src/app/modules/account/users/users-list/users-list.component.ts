@@ -1,13 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
-import { User } from '../../resources/models/User';
+import { RegisterUser, User } from '../../resources/models/User';
+import { UserService } from '../../resources/services/user.service';
 import * as fromUserActions from '../../state/actions/users.actions'
-import { selectAllUsers } from '../../state/selectors/users.selectors';
+import { selectAllUsers, selectUser } from '../../state/selectors/users.selectors';
 import { CreateUserComponent } from '../create-user/create-user.component';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
+import { UpdateUserComponent } from '../update-user/update-user.component';
 
 @Component({
   selector: 'app-users-list',
@@ -15,14 +18,13 @@ import { CreateUserComponent } from '../create-user/create-user.component';
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'position', 'reset', 'delete'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'position', 'update', 'reset', 'delete'];
   dataSource: MatTableDataSource<User>;
-  user!: User;
+  user!: User | null | undefined;
+  paginator!: MatPaginator;
+  sort!: MatSort;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  constructor(private store: Store, private dialog: MatDialog) { 
+  constructor(private store: Store, private dialog: MatDialog, private userService: UserService) { 
     this.dataSource = new MatTableDataSource<User>();
   }
 
@@ -47,19 +49,46 @@ export class UsersListComponent implements OnInit {
     }
   }
 
-  openDialog(): void {
+  addUser() {
     const dialogRef = this.dialog.open(CreateUserComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
+      if(result != undefined){
+        this.store.dispatch(fromUserActions.addUser({user : (result as RegisterUser)}))
+      }
     });
   }
 
-  reletePassword(id: string){
-    console.log(id);
+  updateUser(id: string){
+    const dialogConfig = new MatDialogConfig();
+
+    this.store.dispatch(fromUserActions.chooseCurrentUser({selectedUserId : id}))
+    this.store.select(selectUser).subscribe(data => { this.user = data })
+
+    if(this.user != null && this.user != undefined){
+      dialogConfig.data = this.user
+    }
+
+    const dialogRef = this.dialog.open(UpdateUserComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined){
+        this.store.dispatch(fromUserActions.updateUser({user : (result as User)}))
+      }
+    });
+  }
+
+  resetPassword(userId: string){
+    const dialogRef = this.dialog.open(ResetPasswordComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined){
+        this.store.dispatch(fromUserActions.resetPassword({ id: userId, newPassword : (result.password as string) }));
+      }
+    });
   }
 
   deleteUser(id: string){
-    console.log(id);
+    this.store.dispatch(fromUserActions.deleteUser({id}));
   }
 }

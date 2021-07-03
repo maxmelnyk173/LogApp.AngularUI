@@ -28,3 +28,16 @@ export const selectAllUsers = createSelector(
     selectUserState,
     UserReducer.selectAll
 );
+
+export const selectUserById = createSelector(
+    selectUserState,
+    UserReducer.getSelectedUserId
+);
+
+export const selectUser = createSelector(
+    selectUserEntities,
+    selectUserById,
+    (userEntities, userId) => {
+        return userId ? userEntities[userId] : null
+    }
+);

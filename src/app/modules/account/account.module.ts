@@ -37,6 +37,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CreateUserComponent } from './users/create-user/create-user.component';
+import { MatSelectModule } from '@angular/material/select';
+import { UpdateUserComponent } from './users/update-user/update-user.component';
+import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,9 @@ import { CreateUserComponent } from './users/create-user/create-user.component';
     UserComponent,
     AdminComponent,
     UsersListComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    UpdateUserComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
@@ -64,6 +69,7 @@ import { CreateUserComponent } from './users/create-user/create-user.component';
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
+    MatSelectModule,
 
     StoreModule.forFeature(fromAccount.accountsFeatureKey, fromAccount.reducer),
     StoreModule.forFeature(fromUsers.usersFeatureKey, fromUsers.reducer),

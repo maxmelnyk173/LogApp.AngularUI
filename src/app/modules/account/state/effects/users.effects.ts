@@ -26,7 +26,7 @@ export class UsersEffects {
       ofType(UserActions.addUser),
       mergeMap((action) =>
         this.userService.addUser(action.user).pipe(
-          map((user) => UserActions.addUserSuccess({ user })),
+          map(user => UserActions.addUserSuccess({ user })),
           catchError(error => of(UserActions.addUserFail({ error : error.error }))))
       ),
     );
@@ -37,12 +37,33 @@ export class UsersEffects {
       ofType(UserActions.deleteUser),
       mergeMap((action) =>
         this.userService.deleteUser(action.id).pipe(
-          map((id) => UserActions.deleteUserSuccess({ id })),
+          map(id => UserActions.deleteUserSuccess({ id })),
           catchError(error => of(UserActions.deleteUserFail({ error : error.error }))))
       ),
     );
   });
 
+  updateUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.updateUser),
+      mergeMap((action) =>
+        this.userService.updateUser(action.user).pipe(
+          map(user => UserActions.updateUserSuccess({ user })),
+          catchError(error => of(UserActions.updateUserFail({ error : error.error }))))
+      ),
+    );
+  });
+
+  resetPassword$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.resetPassword),
+      mergeMap((action) =>
+        this.userService.resetPassword(action.id, action.newPassword).pipe(
+          map(data => UserActions.resetPasswordSuccess({ result: data })),
+          catchError(error => of(UserActions.resetPasswordFail({ error : error.error }))))
+      ),
+    );
+  });
 
   constructor(private actions$: Actions, private userService: UserService) {}
 }

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { User } from '../../resources/models/User';
+import { MatDialogRef } from '@angular/material/dialog';
+import { UserService } from '../../resources/services/user.service';
 
 
 @Component({
@@ -12,18 +12,26 @@ import { User } from '../../resources/models/User';
 export class CreateUserComponent implements OnInit {
 
   createUserForm!: FormGroup;
+  roles: string[] = [];
+  hide: boolean = true;
+  
   constructor(private fb: FormBuilder, 
-    private dialogRef: MatDialogRef<CreateUserComponent>,
-    @Inject(MAT_DIALOG_DATA) data: User) { }
+    private userService: UserService,
+    private dialogRef: MatDialogRef<CreateUserComponent>) { }
 
   ngOnInit(): void {
     this.createUserForm = this.fb.group({
       firstName : ['', Validators.compose([Validators.required])],  
       lastName : ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
+      password : ['', Validators.compose([Validators.required, Validators.minLength(8)])],
       role: ['', Validators.compose([Validators.required])],
       position: ['', Validators.compose([Validators.required])]
     });
+
+    this.userService.getRoles().subscribe(result => {
+      this.roles = result;
+    })
   }
 
   close() {

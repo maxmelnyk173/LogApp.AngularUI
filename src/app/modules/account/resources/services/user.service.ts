@@ -1,21 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { AppSettings } from 'src/app/common/appSettings';
-import { CurrentUser, User } from '../models/User';
+import { CurrentUser, RegisterUser, User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  currentUser$: Observable<CurrentUser>;
-  user$: Observable<User>;
-
   constructor(private http: HttpClient) { 
-    this.currentUser$ = new Observable<CurrentUser>();
-    this.user$ = new Observable<User>();
   }
 
   getAllUsers(){
@@ -26,12 +21,29 @@ export class UserService {
     return this.http.get<CurrentUser>(AppSettings.baseUrl + "Account/user/" + id);
   }
 
-  addUser(body: User){
-    return this.http.post<any>(AppSettings.baseUrl + "Account/register", body, { observe: 'response' }).pipe(
-      switchMap((data) => {
-        if (data.status == 200) {
-          this.user$ = new Observable(user => user.next(body))
-          return this.user$;
+  addUser(body: RegisterUser){
+    return this.http.post<any>(AppSettings.baseUrl + "Account/register-user", body, 
+      { responseType: 'text' as 'json', observe: 'response' }).pipe(
+      switchMap(data => {
+          let user: User = {
+            id: data.body,
+            firstName: body.firstName,
+            lastName: body.lastName,
+            email: body.email,
+            role: body.role,
+            position: body.position
+          }
+          return new Observable<User>(data => data.next(user));
+      }),
+      catchError(err => throwError(err))
+    );
+  }
+
+  updateUserData(body: CurrentUser){
+    return this.http.put<any>(AppSettings.baseUrl + "Account/account-data", body, { observe: 'response' }).pipe(
+      switchMap(data => {
+        if (data.status == 204) {
+          return  new Observable<CurrentUser>(user => user.next(body));
         } else {
           return throwError(data);
         }
@@ -39,12 +51,11 @@ export class UserService {
     );
   }
 
-  updateUserData(body: CurrentUser){
-    return this.http.put<any>(AppSettings.baseUrl + "Account/user", body, { observe: 'response' }).pipe(
-      switchMap((data) => {
+  updateUser(body: User){
+    return this.http.put<string>(AppSettings.baseUrl + "Account/user", body, { observe: 'response' }).pipe(
+      switchMap(data => {
         if (data.status == 204) {
-          this.currentUser$ = new Observable(user => user.next(body))
-          return this.currentUser$;
+          return new Observable<User>(user => user.next(body));
         } else {
           return throwError(data);
         }
@@ -53,10 +64,10 @@ export class UserService {
   }
 
   deleteUser(id: string){
-    return this.http.delete<string>(AppSettings.baseUrl + "/api/Account/user/" + id, { observe: 'response' }).pipe(
-      switchMap((data) => {
+    return this.http.delete<string>(AppSettings.baseUrl + "Account/user/" + id, { observe: 'response' }).pipe(
+      switchMap(data => {
         if (data.status == 204) {
-          return id;
+          return new Observable<string>(data => data.next(id));
         } else {
           return throwError(data);
         }
@@ -65,6 +76,10 @@ export class UserService {
   }
 
   getRoles(){
-    this.http.get<string[]>(AppSettings.baseUrl + "/api/Account/roles");
+    return this.http.get<string[]>(AppSettings.baseUrl + "Account/roles");
+  }
+
+  resetPassword( id: string, newPassword: string ){
+    return this.http.put<boolean>(AppSettings.baseUrl + "Account/reset-password", { id, newPassword });
   }
 }

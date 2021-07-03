@@ -28,8 +28,8 @@
                     <span *ngIf="updateUserDataForm.controls.position.errors?.required">Field is mandatory</span>
                   </mat-error>
             </mat-form-field>
-            <button type="submit" mat-raised-button color="primary"
-            [attr.aria-label]="'Save Data'" class="userFormBtn">
+            <button type="submit" mat-raised-button color="primary" [disabled]="!this.updateUserDataForm.valid"
+                [attr.aria-label]="'Save Data'" class="userFormBtn">
                 Save Data
             </button>
         </form>
@@ -59,9 +59,9 @@
                     <span *ngIf="updateUserPasswordForm.controls.passwordConfirm.errors?.minlength">Input lenght is invalid</span>
                 </mat-error>
             </mat-form-field>
-            <button type="submit" mat-raised-button color="primary"
-            [attr.aria-label]="'Change Password'" class="userFormBtn">
-            Change Password
+            <button type="submit" mat-raised-button color="primary" [disabled]="!this.updateUserPasswordForm.valid"
+                [attr.aria-label]="'Change Password'" class="userFormBtn">
+                Change Password
             </button>
         </form>
     </div>

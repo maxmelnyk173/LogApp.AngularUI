@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AuthData } from '../models/AuthData';
 import { HttpClient } from '@angular/common/http';
-import { map} from 'rxjs/operators';
+import { map, switchMap} from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { getUserData } from 'src/app/store/selectors/auth.selectors';
 import { select, Store } from '@ngrx/store';
 import { AppSettings } from 'src/app/common/appSettings';
+import { CurrentUser } from '../models/User';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +39,17 @@ export class AuthService {
       this.authData.exp = Number(this.jwtHelperService.getTokenExpirationDate(data.token));
       return this.authData;
     }));
+  }
+
+  updateUserData(body: CurrentUser){
+    return this.http.put<any>(AppSettings.baseUrl + "Account/account-data", body, { observe: 'response' }).pipe(
+      switchMap(data => {
+        if (data.status == 204) {
+          return  new Observable<CurrentUser>(user => user.next(body));
+        } else {
+          return throwError(data);
+        }
+      })
+    );
   }
 }

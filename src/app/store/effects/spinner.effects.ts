@@ -21,7 +21,7 @@ export class SpinnerEffects {
   spinneroff$ = createEffect(
     () => 
     this.actions$.pipe(
-      ofType(fromAuthActions.firstLoginSuccess),
+      ofType(fromAuthActions.firstLoginSuccess, fromAuthActions.loginFailure),
       tap(() => this.loader.hide())
     ),
     { dispatch: false }

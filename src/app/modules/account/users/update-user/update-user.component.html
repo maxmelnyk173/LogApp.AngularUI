@@ -1,0 +1,61 @@
+<h1 mat-dialog-title>Update User</h1>
+<div mat-dialog-content>
+    <form method="POST" class="updateUserForm" [formGroup]="updateUserForm" 
+          xLayout="row" fxLayout.xs="column" fxLayoutGap="0.5rem" fxLayoutGap.xs="0" fxFlex.xs="100%">
+        <div fxLayout="column" fxLayoutGap="0.5rem" fxFlex="50%" fxFlex.xs="100%">
+          
+          <input hidden formControlName="id">
+
+          <mat-form-field appearance="fill" class="userFormInput">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" required>
+              <mat-error *ngIf="updateUserForm.controls.firstName.dirty && updateUserForm.controls.firstName.invalid">
+                  <span *ngIf="updateUserForm.controls.firstName.errors?.required">Field is mandatory</span>
+                </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="userFormInput">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="example@example.com" formControlName="email" required>
+            <mat-error *ngIf="updateUserForm.controls.email.dirty && updateUserForm.controls.email.invalid">
+              <span *ngIf="updateUserForm.controls.email.errors?.required">Field is mandatory</span>
+              <span *ngIf="updateUserForm.controls.email.errors?.email">Data entered are invalid</span>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Role</mat-label>
+            <mat-select required formControlName="role">
+              <mat-option *ngFor="let r of roles" [value]="r">{{r}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="updateUserForm.controls.role.dirty && updateUserForm.controls.role.invalid">
+              <span *ngIf="updateUserForm.controls.role.errors?.required">Field is mandatory</span>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div fxLayout="column" fxLayoutGap="0.5rem" fxFlex="50%" fxFlex.xs="100%">
+
+          <mat-form-field appearance="fill" class="userFormInput">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" required>
+            <mat-error *ngIf="updateUserForm.controls.lastName.dirty && updateUserForm.controls.lastName.invalid">
+                <span *ngIf="updateUserForm.controls.lastName.errors?.required">Field is mandatory</span>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="userFormInput">
+            <mat-label>Position</mat-label>
+            <input matInput formControlName="position" required>
+            <mat-error *ngIf="updateUserForm.controls.position.dirty && updateUserForm.controls.position.invalid">
+                <span *ngIf="updateUserForm.controls.position.errors?.required">Field is mandatory</span>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions>
+  <button type="button" mat-button (click)="close()">Cancel</button>
+  <button mat-button (click)="save()" [disabled]="!this.updateUserForm.valid" class="modelButton">Ok</button>
+</div>

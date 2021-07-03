@@ -1,16 +1,21 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../resources/models/User';
+import { RegisterUser, User } from '../../resources/models/User';
 
 /**
  * Load Users
  */
 export const loadUsers = createAction(
-  '[Admin Section] Load Users'
+  '[Admin Section / User] Load Users'
 );
 
 export const loadUsersSuccess = createAction(
   '[User Effect] Load Users Success', 
   props<{ users: User[] }>()
+);
+
+export const chooseCurrentUser = createAction(
+  '[Admin Section / User] Choose Current User',
+  props<{ selectedUserId: string }>()
 );
 
 export const loadUsersFail = createAction(
@@ -22,8 +27,8 @@ export const loadUsersFail = createAction(
  * Add User
  */
 export const addUser = createAction(
-  '[Users/API] Add User',
-  props<{ user: User }>()
+  '[Admin Section / User] Add User',
+  props<{ user: RegisterUser }>()
 );
 
 export const addUserSuccess = createAction(
@@ -40,7 +45,7 @@ export const addUserFail = createAction(
  * Delete User
  */
 export const deleteUser = createAction(
-  '[Users/API] Delete Users',
+  '[Admin Section / User] Delete Users',
   props<{ id: string }>()
 );
 
@@ -52,4 +57,42 @@ export const deleteUserSuccess = createAction(
 export const deleteUserFail = createAction(
   '[User Effect] Delete User Fail', 
   props<{ error: any }>()
+);
+
+
+/**
+ * Update User
+ */
+export const updateUser = createAction(
+  '[Admin Section / User] Update User',
+  props<{ user: User }>()
+);
+
+export const updateUserSuccess = createAction(
+  '[User Effect] Update User Success', 
+  props<{ user: User }>()
+);
+
+export const updateUserFail = createAction(
+  '[User Effect] Update User Fail', 
+  props<{ error: any  }>()
+);
+
+/**
+ * Reset password
+ */
+
+ export const resetPassword = createAction(
+  '[Admin Section / User] Reset Password',
+  props<{ id: string, newPassword: string }>()
+);
+
+export const resetPasswordSuccess = createAction(
+  '[User Effect] Reset Password Success',
+  props<{ result: boolean }>()
+);
+
+export const resetPasswordFail = createAction(
+  '[User Effect] Reset Password Fail', 
+  props<{ error: any  }>()
 );
