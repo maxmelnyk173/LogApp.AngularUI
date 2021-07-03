@@ -1,0 +1,18 @@
+<form [formGroup]="createCarrierForm" (ngSubmit)="onSubmit()" class="createCarrierForm">
+    <mat-form-field appearance="legacy" class="formField">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" required>
+        <mat-error *ngIf="createCarrierForm.controls.name.dirty && createCarrierForm.controls.name.invalid">
+          <span *ngIf="createCarrierForm.controls.name.errors?.required">Field is mandatory</span>
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" type="submit" [disabled]="!this.createCarrierForm.valid">Submit</button>
+</form>
+
+<mat-chip-list>
+  <mat-chip color="primary" selected *ngFor="let item of carriers">
+    {{item.name}}
+    <mat-icon matChipRemove (click)="delete(item.id)">cancel</mat-icon>
+  </mat-chip>
+</mat-chip-list>

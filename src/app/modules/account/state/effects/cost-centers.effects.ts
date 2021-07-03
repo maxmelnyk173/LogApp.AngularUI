@@ -10,7 +10,7 @@ import * as CostCenterActions from '../actions/cost-centers.actions';
 @Injectable()
 export class CostCentersEffects {
 
-  loadUsers$ = createEffect(() => {
+  loadCostCenters$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(CostCenterActions.loadCostCenters),
       mergeMap(() =>
@@ -21,7 +21,7 @@ export class CostCentersEffects {
     );
   });
 
-  addUser$ = createEffect(() => {
+  addCostCenter$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(CostCenterActions.addCostCenter),
       mergeMap((action) =>
@@ -32,7 +32,7 @@ export class CostCentersEffects {
     );
   });
 
-  deleteUser$ = createEffect(() => {
+  deleteCostCenter$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(CostCenterActions.deleteCostCenter),
       mergeMap((action) =>

@@ -43,5 +43,4 @@ export class CostCentersComponent implements OnInit {
   delete(id: string){
     this.store.dispatch(fromCostCentreActions.deleteCostCenter({id}));
   }
-
 }

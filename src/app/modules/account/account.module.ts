@@ -43,6 +43,8 @@ import { ResetPasswordComponent } from './users/reset-password/reset-password.co
 import { CostCentersComponent } from './cost-centers/cost-centers.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
+import { CarriersComponent } from './carriers/carriers.component';
+import { ShipmentStatusesComponent } from './shipment-statuses/shipment-statuses.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { MatMenuModule } from '@angular/material/menu';
     CreateUserComponent,
     UpdateUserComponent,
     ResetPasswordComponent,
-    CostCentersComponent
+    CostCentersComponent,
+    CarriersComponent,
+    ShipmentStatusesComponent
   ],
   imports: [
     CommonModule,

@@ -25,7 +25,6 @@ export class CostCentersService {
             name: body.name,
             costCenterCode: body.costCenterCode
           }
-          console.log(costCenter);
           return new Observable<CostCenter>(data => data.next(costCenter));
         } else {
           return throwError(data);

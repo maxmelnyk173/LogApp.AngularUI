@@ -9,4 +9,17 @@ import * as AccountActions from '../actions/account.actions';
 
 @Injectable()
 export class AccountEffects {
+
+    changePassword$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AccountActions.changePassword),
+            mergeMap((action) =>
+            this.userService.changePassword(action.password).pipe(
+                map(data => AccountActions.changePasswordSuccess({ result: data })),
+                catchError(error => of(AccountActions.changePasswordFail({ error : error.error }))))
+            ),
+        );
+        });
+
+    constructor(private actions$: Actions, private userService: UserService) {}
 }

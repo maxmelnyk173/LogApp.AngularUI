@@ -18,6 +18,29 @@ export const initialState: State = adapter.getInitialState({
 
 export const reducer = createReducer(
   initialState,
+  on(
+    CarriersActions.loadCarriersSuccess,
+    (state, action) => adapter.setMany(action.carriers, state)
+  ),
+  on(
+    CarriersActions.addCarrierSuccess,
+    (state, { carrier }) => { return adapter.addOne(carrier, state) }
+  ),
+  on(
+    CarriersActions.deleteCarrierSuccess, (state, { id }) => {
+    return adapter.removeOne(id, state);
+  }),
+  on(
+    CarriersActions.addCarrierFail,
+    CarriersActions.loadCarriersFail,
+    CarriersActions.deleteCarrierFail,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error
+      }
+    }
+  ),
 );
 
 

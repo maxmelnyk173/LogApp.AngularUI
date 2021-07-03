@@ -6,26 +6,27 @@ import { CurrentUser } from '../../resources/models/User';
 export const accountsFeatureKey = 'accounts';
 
 export interface State extends EntityState<CurrentUser> {
-  selectedUserId: string | null;
   error: any
 }
 
 export const adapter: EntityAdapter<CurrentUser> = createEntityAdapter<CurrentUser>();
 
 export const initialState: State = adapter.getInitialState({
-  selectedUserId: null,
   error: null
 });
 
 export const reducer = createReducer(
   initialState,
+  on(
+    AccountActions.changePasswordFail,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error
+      }
+    }
+  ),
 );
-
-export function reduserReducer(state: State | undefined, action: Action) {
-  return reducer(state, action);
-}
- 
-export const getSelectedUserId = (state: State) => state.selectedUserId;
 
 export const {
   selectIds,

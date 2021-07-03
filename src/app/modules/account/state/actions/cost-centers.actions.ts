@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
 import { CostCenter, CostCenterAdd } from '../../resources/models/CostCenter';
 
 /**
@@ -15,7 +14,7 @@ export const loadCostCentersSuccess = createAction(
 );
 
 export const loadCostCentersFail = createAction(
-    '[User Effect] Load CostCenter Fail', 
+    '[CostCenter Effect] Load CostCenter Fail', 
     props<{ error: any }>()
 );
 
@@ -46,7 +45,7 @@ export const deleteCostCenter = createAction(
 );
 
 export const deleteCostCenterSuccess = createAction(
-    '[CostCenter Effect] Delete User Success',
+    '[CostCenter Effect] Delete CostCenter Success',
     props<{ id: string }>()
 );
 

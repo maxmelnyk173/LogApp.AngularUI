@@ -22,3 +22,9 @@ export interface CurrentUser{
   lastName: string,
   position: string
 }
+
+export interface ChangePassword{
+  id: string,
+  oldPassword: string,
+  newPassword: string
+}

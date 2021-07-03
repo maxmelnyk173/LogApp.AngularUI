@@ -18,6 +18,29 @@ export const initialState: State = adapter.getInitialState({
 
 export const reducer = createReducer(
   initialState,
+  on(
+    ShipmentStatusesActions.loadShipmentStatusesSuccess,
+    (state, action) => adapter.setMany(action.shipmentStatuses, state)
+  ),
+  on(
+    ShipmentStatusesActions.addShipmentStatusSuccess,
+    (state, { shipmentStatus }) => { return adapter.addOne(shipmentStatus, state) }
+  ),
+  on(
+    ShipmentStatusesActions.deleteShipmentStatusSuccess, (state, { id }) => {
+    return adapter.removeOne(id, state);
+  }),
+  on(
+    ShipmentStatusesActions.addShipmentStatusFail,
+    ShipmentStatusesActions.loadShipmentStatusesFail,
+    ShipmentStatusesActions.deleteShipmentStatusFail,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error
+      }
+    }
+  ),
 );
 
 

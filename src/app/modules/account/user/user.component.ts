@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { CurrentUser } from '../resources/models/User';
+import { ChangePassword, CurrentUser } from '../resources/models/User';
 
 import * as fromAuthSelect from 'src/app/store/selectors/auth.selectors';
 import { updateUserData } from 'src/app/store/actions/auth.actions';
+import { changePassword } from '../state/actions/account.actions';
 
 @Component({
   selector: 'app-user',
@@ -43,8 +44,8 @@ export class UserComponent implements OnInit {
     });
 
     this.updateUserPasswordForm = this.fb.group({
-      password : ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      passwordConfirm : ['', Validators.compose([Validators.required, Validators.minLength(8)])]
+      oldPassword : ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+      newPassword : ['', Validators.compose([Validators.required, Validators.minLength(8)])]
     });
   }
 
@@ -79,5 +80,14 @@ export class UserComponent implements OnInit {
     if (!this.updateUserPasswordForm.valid) {
       return;
     }
+
+    let password: ChangePassword = {
+      id: this.user.id,
+      oldPassword: this.updateUserPasswordForm.value.oldPassword,
+      newPassword: this.updateUserPasswordForm.value.newPassword
+    }
+
+    console.log(password)
+    this.store.dispatch(changePassword({password}));
   }
 }

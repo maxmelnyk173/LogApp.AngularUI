@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { AppSettings } from 'src/app/common/appSettings';
-import { CurrentUser, RegisterUser, User } from '../models/User';
+import { ChangePassword, CurrentUser, RegisterUser, User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -69,5 +69,9 @@ export class UserService {
 
   resetPassword( id: string, newPassword: string ){
     return this.http.put<boolean>(AppSettings.baseUrl + "Account/reset-password", { id, newPassword });
+  }
+
+  changePassword(body: ChangePassword){
+    return this.http.put<boolean>(AppSettings.baseUrl + "Account/change-password", body);
   }
 }
