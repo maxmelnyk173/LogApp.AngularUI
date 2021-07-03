@@ -10,23 +10,16 @@ import * as AccountActions from '../actions/account.actions';
 @Injectable()
 export class AccountEffects {
 
-  loadUser$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(AccountActions.loadCurrentUser),
-      mergeMap((action) =>
-        this.userService.getUser(action.id).pipe(
-          map(user => AccountActions.loadCurrentUserSuccessed({ user })),
-          catchError(error => of(AccountActions.loadCurrentUserFailed({ error : error.error }))))
-      ),
-    );
-  });
+    changePassword$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AccountActions.changePassword),
+            mergeMap((action) =>
+            this.userService.changePassword(action.password).pipe(
+                map(data => AccountActions.changePasswordSuccess({ result: data })),
+                catchError(error => of(AccountActions.changePasswordFail({ error : error.error }))))
+            ),
+        );
+        });
 
-  chooseCurrentUser$ = createEffect(
-    () => this.actions$.pipe(
-      ofType(AccountActions.loadCurrentUserSuccessed),
-      map(user => AccountActions.chooseCurrentUser({ selectedUserId: user.user.id }))
-    )
-  );
-
-  constructor(private actions$: Actions, private userService: UserService) {}
+    constructor(private actions$: Actions, private userService: UserService) {}
 }

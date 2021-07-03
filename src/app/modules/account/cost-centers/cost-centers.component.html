@@ -1,0 +1,27 @@
+<form [formGroup]="createcostCenterForm" (ngSubmit)="onSubmit()" class="costCenterForm">
+    <mat-form-field appearance="legacy" class="formField">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" required>
+        <mat-error *ngIf="createcostCenterForm.controls.name.dirty && createcostCenterForm.controls.name.invalid">
+          <span *ngIf="createcostCenterForm.controls.name.errors?.required">Field is mandatory</span>
+        </mat-error>
+    </mat-form-field>
+      
+    <mat-form-field appearance="legacy" class="formField">
+        <mat-label>Cost Center</mat-label>
+        <input matInput placeholder="Cost Center" formControlName="costCenterCode" required>
+        <mat-error *ngIf="createcostCenterForm.controls.costCenterCode.dirty && createcostCenterForm.controls.costCenterCode.invalid">
+          <span *ngIf="createcostCenterForm.controls.costCenterCode.errors?.required">Field is mandatory</span>
+          <span *ngIf="createcostCenterForm.controls.costCenterCode.errors?.pattern">Only numbers accepted</span>
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" type="submit" [disabled]="!this.createcostCenterForm.valid">Submit</button>
+</form>
+
+<mat-chip-list>
+  <mat-chip color="primary" selected *ngFor="let item of costCenters">
+    {{item.name}} / {{item.costCenterCode}}
+    <mat-icon matChipRemove (click)="delete(item.id)">cancel</mat-icon>
+  </mat-chip>
+</mat-chip-list>

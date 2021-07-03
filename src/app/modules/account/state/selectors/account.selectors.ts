@@ -13,22 +13,4 @@ export const reducers: ActionReducerMap<State> = {
 export const selectUserState = createFeatureSelector<AccountReducer.State>(
     AccountReducer.accountsFeatureKey
 );
-
-export const selectUserEntities = createSelector(
-    selectUserState,
-    AccountReducer.selectEntities
-);
-
-export const selectCurrentUserId = createSelector(
-    selectUserState,
-    AccountReducer.getSelectedUserId
-);
-
-export const selectCurrentUser = createSelector(
-    selectUserEntities,
-    selectCurrentUserId,
-    (userEntities, userId) => {
-        return userId ? userEntities[userId] : null
-    }
-);
    

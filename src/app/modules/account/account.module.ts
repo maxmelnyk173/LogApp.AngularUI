@@ -40,6 +40,11 @@ import { CreateUserComponent } from './users/create-user/create-user.component';
 import { MatSelectModule } from '@angular/material/select';
 import { UpdateUserComponent } from './users/update-user/update-user.component';
 import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
+import { CostCentersComponent } from './cost-centers/cost-centers.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatMenuModule } from '@angular/material/menu';
+import { CarriersComponent } from './carriers/carriers.component';
+import { ShipmentStatusesComponent } from './shipment-statuses/shipment-statuses.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +54,10 @@ import { ResetPasswordComponent } from './users/reset-password/reset-password.co
     UsersListComponent,
     CreateUserComponent,
     UpdateUserComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    CostCentersComponent,
+    CarriersComponent,
+    ShipmentStatusesComponent
   ],
   imports: [
     CommonModule,
@@ -70,6 +78,8 @@ import { ResetPasswordComponent } from './users/reset-password/reset-password.co
     MatSortModule,
     MatDialogModule,
     MatSelectModule,
+    MatChipsModule,
+    MatMenuModule,
 
     StoreModule.forFeature(fromAccount.accountsFeatureKey, fromAccount.reducer),
     StoreModule.forFeature(fromUsers.usersFeatureKey, fromUsers.reducer),

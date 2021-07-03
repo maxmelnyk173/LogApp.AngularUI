@@ -35,34 +35,15 @@ export class AuthEffects {
     () => this.actions$.pipe(
       ofType(AuthActions.updateUserData),
       switchMap(action => this.authSerice.updateUserData(action.body).pipe(
-        map((data) => AuthActions.updateUserDataSucced({ user : data })),
-        catchError(error => of(AuthActions.updateUserDataFailed({ error : error.error })))
+        map((data) => AuthActions.updateUserDataSuccess({ authData : data })),
+        catchError(error => of(AuthActions.updateUserDataFailure({ error : error.error })))
       ))
     )
   )
 
-  saveDataToLocalStorageOnUpdate$ = createEffect(
-    () => this.actions$.pipe(
-      ofType(AuthActions.updateUserDataSucced),
-      map(data => {
-        const extractedAuthData = localStorage.getItem("AuthData");
-        if(extractedAuthData){
-          const authData = JSON.parse(extractedAuthData) as AuthData;
-          authData.user.id = data.user.id;
-          authData.user.firstName = data.user.firstName;
-          authData.user.lastName = data.user.lastName;
-          authData.user.position = data.user.position;
-          console.log(authData);
-          localStorage.setItem("AuthData", JSON.stringify(authData as AuthData));
-        }
-      })
-    ),
-    { dispatch: false }
-  )
-
   saveDataToLocalStorage$ = createEffect(
     () => this.actions$.pipe(
-      ofType(AuthActions.loginSuccess),
+      ofType(AuthActions.loginSuccess, AuthActions.updateUserDataSuccess),
       tap(data => {
         const {type, ...authData} = data;
         localStorage.setItem("AuthData", JSON.stringify(authData.authData as AuthData))

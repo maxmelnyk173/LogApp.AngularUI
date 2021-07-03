@@ -38,25 +38,25 @@
         <form method="POST" class="updateUserForm" [formGroup]="updateUserPasswordForm" (ngSubmit)="submitPasswordUpdates()" >
             <h2>Change Password</h2>
             <mat-form-field appearance="fill" class="userFormInput">
-                <mat-label>Enter new password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                <mat-label>Old new password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="oldPassword" required>
                 <button type="button" mat-icon-button matSuffix (click)="hidePassword()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-                <mat-error *ngIf="updateUserPasswordForm.controls.password.dirty && updateUserPasswordForm.controls.password.invalid">
-                    <span *ngIf="updateUserPasswordForm.controls.password.errors?.required">Field is mandatory</span>
-                    <span *ngIf="updateUserPasswordForm.controls.password.errors?.minlength">Input lenght is invalid</span>
+                <mat-error *ngIf="updateUserPasswordForm.controls.oldPassword.dirty && updateUserPasswordForm.controls.oldPassword.invalid">
+                    <span *ngIf="updateUserPasswordForm.controls.oldPassword.errors?.required">Field is mandatory</span>
+                    <span *ngIf="updateUserPasswordForm.controls.oldPassword.errors?.minlength">Input lenght is invalid</span>
                   </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="userFormInput">
-                <mat-label>Confirm new password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordConfirm" required>
+                <mat-label>New password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="newPassword" required>
                 <button type="button" mat-icon-button matSuffix (click)="hidePassword()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-                <mat-error *ngIf="updateUserPasswordForm.controls.passwordConfirm.dirty && updateUserPasswordForm.controls.passwordConfirm.invalid">
-                    <span *ngIf="updateUserPasswordForm.controls.passwordConfirm.errors?.required">Field is mandatory</span>
-                    <span *ngIf="updateUserPasswordForm.controls.passwordConfirm.errors?.minlength">Input lenght is invalid</span>
+                <mat-error *ngIf="updateUserPasswordForm.controls.newPassword.dirty && updateUserPasswordForm.controls.newPassword.invalid">
+                    <span *ngIf="updateUserPasswordForm.controls.newPassword.errors?.required">Field is mandatory</span>
+                    <span *ngIf="updateUserPasswordForm.controls.newPassword.errors?.minlength">Input lenght is invalid</span>
                 </mat-error>
             </mat-form-field>
             <button type="submit" mat-raised-button color="primary" [disabled]="!this.updateUserPasswordForm.valid"

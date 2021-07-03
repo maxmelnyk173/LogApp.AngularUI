@@ -1,44 +1,20 @@
 import { createAction, props } from '@ngrx/store';
-import { CurrentUser } from '../../resources/models/User';
+import { ChangePassword, CurrentUser } from '../../resources/models/User';
 
 /**
- * User Section
- * Load User
+ * Change Password
  */
-export const loadCurrentUser = createAction(
-  '[User Component] Load Current User',
-  props<{ id: string }>()
+export const changePassword = createAction(
+    '[Account User Section] Change Password',
+    props<{ password: ChangePassword }>()
 );
 
-export const loadCurrentUserSuccessed = createAction(
-  '[Account Effect] Load User Successed',
-  props<{ user: CurrentUser }>()
+export const changePasswordSuccess = createAction(
+    '[User Effect] Change Password Success', 
+    props<{ result: boolean }>()
 );
 
-export const chooseCurrentUser = createAction(
-  '[User Component] Choose Current User',
-  props<{ selectedUserId: string }>()
+export const changePasswordFail = createAction(
+    '[Carrier Effect] Load Carrier Fail', 
+    props<{ error: any }>()
 );
-
-export const loadCurrentUserFailed = createAction(
-  '[Account Effect] Load User Failed',
-  props<{ error: any }>()
-);
-
-/**
- * Update User Data
- */
-export const updateUserData = createAction(
-  '[User Component] Update User Data',
-  props<{ body: CurrentUser }>()
-)
-
-export const updateUserDataSucced = createAction(
-  '[User Component] Update User Succed ',
-  props<{ user: CurrentUser }>()
-)
-
-export const updateUserDataFailed = createAction(
-  '[Account Effect] Update User Failed',
-  props<{ error: any }>()
-)

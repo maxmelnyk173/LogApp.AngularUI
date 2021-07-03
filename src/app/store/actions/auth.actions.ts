@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
+import { CurrentUser } from 'src/app/modules/account/resources/models/User';
 import { AuthData } from 'src/app/shared/models/AuthData';
-import { CurrentUser } from 'src/app/shared/models/User';
 
 export const login = createAction(
   '[Login Component] Login User',
@@ -13,7 +13,7 @@ export const firstLoginSuccess = createAction(
 
 export const loginSuccess = createAction(
   '[Auth Effect] Login User Success',
-  props<{ authData: AuthData}>()
+  props<{ authData: AuthData }>()
 );
 
 export const loginFailure = createAction(
@@ -46,12 +46,12 @@ export const updateUserData = createAction(
   props<{ body: CurrentUser }>()
 )
 
-export const updateUserDataSucced = createAction(
+export const updateUserDataSuccess = createAction(
   '[User Component] Update User Succed ',
-  props<{ user: CurrentUser }>()
+  props<{ authData: AuthData }>()
 )
 
-export const updateUserDataFailed = createAction(
+export const updateUserDataFailure = createAction(
   '[Account Effect] Update User Failed',
   props<{ error: any }>()
 )

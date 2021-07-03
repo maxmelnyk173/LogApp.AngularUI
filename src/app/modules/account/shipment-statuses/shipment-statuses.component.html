@@ -1,0 +1,19 @@
+<form [formGroup]="createShipmentStatusForm" (ngSubmit)="onSubmit()" class="createShipmentStatusForm">
+    <mat-form-field appearance="legacy" class="formField">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" required>
+        <mat-error *ngIf="createShipmentStatusForm.controls.name.dirty && createShipmentStatusForm.controls.name.invalid">
+          <span *ngIf="createShipmentStatusForm.controls.name.errors?.required">Field is mandatory</span>
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" type="submit" [disabled]="!this.createShipmentStatusForm.valid">Submit</button>
+</form>
+
+<mat-chip-list>
+  <mat-chip color="primary" selected *ngFor="let item of shipmentStatuses">
+    {{item.name}}
+    <mat-icon matChipRemove (click)="delete(item.id)">cancel</mat-icon>
+  </mat-chip>
+</mat-chip-list>
+
