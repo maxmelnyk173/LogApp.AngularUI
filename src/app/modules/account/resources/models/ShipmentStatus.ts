@@ -1,3 +1,3 @@
-export interface ShipmentStatuses {
+export interface ShipmentStatus {
   id: string;
 }

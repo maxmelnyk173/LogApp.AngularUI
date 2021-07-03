@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 import * as fromAuthActions from 'src/app/store/actions/auth.actions';
 import * as fromUserActions from 'src/app/modules/account/state/actions/users.actions';
-import * as fromAccountActions from 'src/app/modules/account/state/actions/account.actions';
+import * as fromCostCenterActions from 'src/app/modules/account/state/actions/cost-centers.actions';
 
 @Injectable()
 export class AlertEffects {
@@ -60,7 +60,8 @@ export class AlertEffects {
   requestCompleted$ = createEffect(
     () => 
     this.actions$.pipe(
-      ofType(fromUserActions.resetPasswordSuccess, fromUserActions.addUserSuccess, fromUserActions.deleteUserSuccess, fromUserActions.updateUserSuccess),
+      ofType(fromUserActions.resetPasswordSuccess, fromUserActions.addUserSuccess, fromUserActions.deleteUserSuccess, fromUserActions.updateUserSuccess, 
+        fromCostCenterActions.deleteCostCenterSuccess, fromCostCenterActions.addCostCenterSuccess),
       tap(() => this.snackBar.open('Done!', '\u2716', {
         duration: 2000,
         panelClass: ['success-snackbar']
@@ -73,7 +74,7 @@ export class AlertEffects {
     () => 
     this.actions$.pipe(
       ofType(fromUserActions.resetPasswordFail, fromUserActions.updateUserFail, fromAuthActions.updateUserDataFailure, fromUserActions.addUserFail, fromUserActions.loadUsersFail, 
-        fromUserActions.deleteUserFail),
+        fromUserActions.deleteUserFail, fromCostCenterActions.addCostCenterFail, fromCostCenterActions.loadCostCentersFail, fromCostCenterActions.deleteCostCenterFail),
       tap((error) => this.snackBar.open('An error occured: ' + error.error, '\u2716', {
         duration: 2000,
         panelClass: ['error-snackbar']
