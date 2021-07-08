@@ -59,10 +59,6 @@ export const reducer = createReducer(
   ),
 );
 
-export function reduserReducer(state: State | undefined, action: Action) {
-  return reducer(state, action);
-}
- 
 export const getSelectedUserId = (state: State) => state.selectedUserId;
 
 export const {
