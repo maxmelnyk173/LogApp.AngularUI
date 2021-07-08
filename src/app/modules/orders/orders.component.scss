@@ -1,0 +1,30 @@
+.orders-headers-align .mat-expansion-panel-header-title,
+.orders-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.orders-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orders-filter-container .mat-form-field + .mat-form-field, 
+.orders-sort-container .mat-form-field + .mat-form-field {
+    margin-left: 1rem;
+}
+
+.filterButton{
+  margin-left: 1rem;
+}
+
+.orderCard{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fiterDiv{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+}

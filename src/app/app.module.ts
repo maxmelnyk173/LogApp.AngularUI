@@ -38,6 +38,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SpinnerEffects } from './store/effects/spinner.effects';
 import { AlertEffects } from './store/effects/alert.effects';
 import { RouteEffects } from './store/effects/route.effects';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { CustomErrorStateMatcher } from './common/customErrorStateMatcher ';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @NgModule({
   declarations: [
@@ -79,11 +82,11 @@ import { RouteEffects } from './store/effects/route.effects';
     OrdersModule,
     AccountModule,
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-  }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, 
+    { provide: ErrorStateMatcher, useClass: CustomErrorStateMatcher },
+    { provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true} }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

@@ -1,1 +1,95 @@
-<p>orders works!</p>
+<div class="ordersContainer">
+
+  <div>
+    <mat-accordion class="orders-headers-align" multi>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Orders
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="sortFilterSection" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around stretch">
+
+          <form class="orders-filter-container" [formGroup]="filterOrdersForm" fxFlex="45%">
+            <mat-form-field appearance="fill" >
+              <mat-label>Enter a date range</mat-label>
+              <mat-date-range-input [rangePicker]="rangePicker">
+                <input matStartDate placeholder="Start date" formControlName="from"/>
+                <input matEndDate placeholder="End date" formControlName="to"/>
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+              <mat-date-range-picker #rangePicker>
+                <mat-date-range-picker-actions>
+                  <button mat-button matDateRangePickerCancel>Cancel</button>
+                  <button mat-button color="primary" matDateRangePickerApply>Apply</button>
+                </mat-date-range-picker-actions>
+              </mat-date-range-picker>
+            </mat-form-field>  
+            <button mat-button color="primary" class="filterButton" (click)="onSubmitFilterForm()" type="button">Apply</button>
+            <button mat-button color="warn" class="filterButton" (click)="onResetFilterForm()" type="button">Reset</button>
+          </form>
+
+          <div class="orders-sort-container" fxFlex="45%">
+            <mat-form-field appearance="fill">
+              <mat-label>Sort</mat-label>
+              <mat-select>
+                <mat-option selected="true" value="new">From new to old</mat-option>
+                <mat-option value="old">From old to new</mat-option>
+                <mat-option value="asc">From A - Z</mat-option>
+                <mat-option value="desc">From Z - A</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>CostCenter</mat-label>
+              <mat-select [(ngModel)]="costCenter" (selectionChange)="sortByCostCenter($event.value)"> 
+                <mat-option value="">Select Option</mat-option>
+                <mat-option *ngFor="let item of costCenters" value="{{item.name}}">{{item.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Include Accepted</mat-label>
+              <mat-select [(ngModel)]="isAccepeted" (selectionChange)="sortWithAccepted($event.value)">
+                <mat-option [value]="false">No</mat-option>
+                <mat-option [value]="true">Yes</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutAlign="space-between center" class="fiterDiv">
+    <button mat-button matTooltip="Create" color="primary" type="button" (click)="createOrder()" fxFlex="8%">
+      Create order
+    </button>
+    <mat-form-field appearance="standard" fxFlex="50%">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+    </mat-form-field>
+    <mat-paginator [pageSize]="6" [hidePageSize]="true" class="paginator" fxFlex="20%"></mat-paginator>
+  </div>
+
+  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="center" fxLayoutGap.xs="0">
+    <mat-card class="orderCard" *ngFor="let item of orders | async" fxFlex="45%" fxFlex.xs="100%">
+      <mat-card-header>
+        <mat-card-title>{{item.lotName}}</mat-card-title>
+        <mat-card-subtitle>{{item.route}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button matTooltip="Update"  color="primary" (click)="updateOrder(item.id)">
+          <mat-icon>autorenew</mat-icon>
+        </button>
+        <button mat-button matTooltip="Delete"  color="warn" (click)="deleteOrder(item.id)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+</div>
+

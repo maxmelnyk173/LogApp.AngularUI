@@ -1,0 +1,112 @@
+<h1 mat-dialog-title>Order</h1>
+<div mat-dialog-content>
+    <mat-stepper orientation="vertical" #stepper>
+
+        <mat-step [stepControl]="generalInfo" errorMessage="Required data is missing">
+            <form [formGroup]="generalInfo">
+                <ng-template matStepLabel>General Data</ng-template>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Lot Name</mat-label>
+                    <input matInput formControlName="lotName" placeholder="Lot name" [errorStateMatcher]="customMatcher"/>
+                    <mat-error><span *ngIf="generalInfo.controls.lotName.hasError('required')">Lot Name field is mandatory</span></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Route</mat-label>
+                    <input matInput formControlName="route" placeholder="Route: from - to" [errorStateMatcher]="customMatcher" />
+                    <mat-error><span *ngIf="generalInfo.controls.route.hasError('required')">Route field is mandatory</span></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Order Type</mat-label>
+                    <mat-select formControlName="orderType" name="orderType" [errorStateMatcher]="customMatcher">
+                        <mat-option *ngFor="let item of orderTypes" [value]="item.value">{{item.name}}</mat-option>
+                    </mat-select>
+                    <mat-error><span *ngIf="generalInfo.controls.orderType.hasError('required')">Order Type field is mandatory</span></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>PickUp date - Delivery date</mat-label>
+                    <mat-date-range-input [rangePicker]="rangePicker">
+                      <input matStartDate placeholder="PickUp date" formControlName="pickUpDate" [errorStateMatcher]="customMatcher">
+                      <input matEndDate placeholder="Delivery date" formControlName="deliveryDate" [errorStateMatcher]="customMatcher">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #rangePicker>
+                      <mat-date-range-picker-actions>
+                        <button mat-button matDateRangePickerCancel>Cancel</button>
+                        <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+                      </mat-date-range-picker-actions>
+                    </mat-date-range-picker>
+                    <mat-error><span *ngIf="generalInfo.controls.pickUpDate.hasError('required')">PickUp Date is mandatory</span></mat-error>
+                    <mat-error><span *ngIf="generalInfo.controls.deliveryDate.hasError('required')">Delivery Date is mandatory</span></mat-error>
+                </mat-form-field>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="goodsInfo" errorMessage="Required data is missing">
+            <form [formGroup]="goodsInfo">
+                <ng-template matStepLabel>Packing Info</ng-template>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Packing Type</mat-label>
+                    <mat-select formControlName="packingType" name="packingType" [errorStateMatcher]="customMatcher">
+                        <mat-option *ngFor="let item of packings" [value]="item.value">{{item.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="goodsInfo.controls.packingType.hasError('required')">Packing Type field is mandatory</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Qoods Quantity</mat-label>
+                    <input type="number" matInput formControlName="goodsQuantity" [errorStateMatcher]="customMatcher" placeholder="Goods quantity" />
+                    <mat-error *ngIf="goodsInfo.controls.goodsQuantity.hasError('required')">Qoods Quantity field is mandatory</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Dimensions</mat-label>
+                    <input matInput formControlName="dimensions" [errorStateMatcher]="customMatcher" placeholder="Dimension: W x D x H" />
+                    <mat-error *ngIf="goodsInfo.controls.dimensions.hasError('required')">Dimensions field is mandatory</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Weight</mat-label>
+                    <input type="number" matInput formControlName="weight" [errorStateMatcher]="customMatcher" placeholder="Weight in KG">
+                    <mat-error *ngIf="goodsInfo.controls.weight.hasError('required')">Weight field is mandatory</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Stackable</mat-label>
+                    <mat-select formControlName="stackability" name="stackability" [errorStateMatcher]="customMatcher" placeholder="Weight in KG">
+                        <mat-option *ngFor="let item of stackability" [value]="item.value">{{item.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="goodsInfo.controls.stackability.hasError('required')">Stackable field is mandatory</mat-error>
+                </mat-form-field>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="paymentInfo" errorMessage="Required data is missing">
+            <form [formGroup]="paymentInfo"> 
+                <ng-template matStepLabel>Invoice info</ng-template>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Cost Center</mat-label>
+                    <mat-select formControlName="costCenterId" name="costCenterId" [errorStateMatcher]="customMatcher" placeholder="Cost Center">
+                        <mat-option *ngFor="let item of costCenters" [value]="item.id">{{item.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="paymentInfo.controls.costCenterId.hasError('required')">Cost Center field is mandatory</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Goods GL</mat-label>
+                    <input matInput formControlName="goodsGL" [errorStateMatcher]="customMatcher" placeholder="Goods GL" />
+                    <mat-error *ngIf="paymentInfo.controls.goodsGL.hasError('required')">Goods GL field is mandatory</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Qoods Type</mat-label>
+                    <input matInput formControlName="goodsType" [errorStateMatcher]="customMatcher" placeholder="Type of goods (FG, Zroh, etc.)">
+                    <mat-error *ngIf="paymentInfo.controls.goodsType.hasError('required')">Qoods type field is mandatory</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="formField">
+                    <mat-label>Notes</mat-label>
+                    <input matInput formControlName="notes">
+                </mat-form-field>
+            </form> 
+        </mat-step>
+    </mat-stepper>
+</div>
+<div mat-dialog-actions>
+  <button type="button" mat-button (click)="close()">Cancel</button>
+  <button mat-button (click)="submit()" class="modalButton" id="modalButton">Ok</button>
+</div>
+
+
